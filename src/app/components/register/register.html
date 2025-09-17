@@ -1,0 +1,23 @@
+<div class="login-container">
+  <div class="login-logo">
+   
+    <h2>Gestor Turnos</h2>
+  </div>
+  <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+    <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+    <div *ngIf="successMsg" class="success-msg">{{ successMsg }}</div>
+    <div class="form-group">
+      <input type="text" placeholder="Nombre completo" name="name" [(ngModel)]="name" required />
+    </div>
+    <div class="form-group">
+      <input type="email" placeholder="Correo del usuario" name="email" [(ngModel)]="email" required />
+    </div>
+    <div class="form-group">
+      <input type="password" placeholder="Password" name="password" [(ngModel)]="password" required />
+    </div>
+    <button type="submit" class="login-btn" [disabled]="!registerForm.form.valid">REGISTRARME</button>
+    <div class="signup-link">
+      <span>¿Ya tienes cuenta?</span> <a routerLink="/login">Inicia sesión</a>
+    </div>
+  </form>
+</div>

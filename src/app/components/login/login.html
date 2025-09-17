@@ -1,0 +1,28 @@
+<div class="login-container">
+  <div class="login-logo">
+    
+    <h2>Gestor Turnos</h2>
+  </div>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+    <div class="form-group">
+      <input type="email" placeholder="Correo del usuario" name="email" [(ngModel)]="email" required />
+    </div>
+    <div class="form-group">
+      <input type="password" placeholder="Password" name="password" [(ngModel)]="password" required />
+    </div>
+    <div class="form-options">
+      <label><input type="checkbox" name="remember" [(ngModel)]="remember" /> Recuérdame</label>
+      <a href="#" class="forgot"> <span class="material-icons">lock</span> ¿Olvidó la contraseña?</a>
+    </div>
+    <button type="submit" class="login-btn" [disabled]="!loginForm.form.valid">LOG IN</button>
+    <div class="google-login">
+      <button type="button" class="google-btn">
+        <span class="google-icon">G+</span>
+      </button>
+    </div>
+    <div class="signup-link">
+      <span>No tienes cuenta?</span> <a routerLink="/register">Sign Up</a>
+    </div>
+  </form>
+</div>
