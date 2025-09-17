@@ -21,6 +21,10 @@ export class Login {
 
   onSubmit() {
     this.errorMsg = '';
+    if (!this.email || !this.password) {
+      this.errorMsg = 'Todos los campos son obligatorios';
+      return;
+    }
     this.auth.login({ email: this.email, password: this.password }).subscribe({
       next: (res) => {
         localStorage.setItem('token', res.token);
