@@ -15,6 +15,7 @@ export class Register {
   name = '';
   email = '';
   password = '';
+  confirmEmail = '';
   errorMsg = '';
   successMsg = '';
 
@@ -23,6 +24,10 @@ export class Register {
   onSubmit() {
     this.errorMsg = '';
     this.successMsg = '';
+    if (this.email !== this.confirmEmail) {
+      this.errorMsg = 'Los correos no coinciden';
+      return;
+    }
     this.auth.register({ name: this.name, email: this.email, password: this.password }).subscribe({
       next: (res) => {
         this.successMsg = 'Registro exitoso. Ahora puedes iniciar sesión.';

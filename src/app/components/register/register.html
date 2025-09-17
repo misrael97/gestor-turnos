@@ -13,9 +13,13 @@
       <input type="email" placeholder="Correo del usuario" name="email" [(ngModel)]="email" required />
     </div>
     <div class="form-group">
+      <input type="email" placeholder="Confirmar correo electrónico" name="confirmEmail" [(ngModel)]="confirmEmail" required />
+    </div>
+    <div *ngIf="email !== confirmEmail && confirmEmail" class="error-msg">Los correos no coinciden</div>
+    <div class="form-group">
       <input type="password" placeholder="Password" name="password" [(ngModel)]="password" required />
     </div>
-    <button type="submit" class="login-btn" [disabled]="!registerForm.form.valid">REGISTRARME</button>
+    <button type="submit" class="login-btn" [disabled]="!registerForm.form.valid || email !== confirmEmail">REGISTRARME</button>
     <div class="signup-link">
       <span>¿Ya tienes cuenta?</span> <a routerLink="/login">Inicia sesión</a>
     </div>
