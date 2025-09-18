@@ -1,0 +1,23 @@
+<div class="alertas-container">
+  <h2>Alertas</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Mensaje</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of alertas">
+        <td>{{ a.id }}</td>
+        <td>{{ a.mensaje }}</td>
+        <td>{{ a.fecha | date:'short' }}</td>
+        <td>
+          <button (click)="atenderAlerta(a.id)">Atender</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

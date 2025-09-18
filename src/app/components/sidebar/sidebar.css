@@ -132,3 +132,22 @@
   margin: 0;
   padding: 0;
 }
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: -250px;
+    width: 250px;
+    z-index: 200;
+    transition: left 0.2s;
+  }
+  .sidebar.collapsed {
+    left: 0;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+@media (max-width: 600px) {
+  .sidebar {
+    width: 200px;
+  }
+}

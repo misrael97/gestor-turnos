@@ -1,4 +1,4 @@
-.negocios-container {
+.citas-container {
   padding: 1rem;
 }
 
@@ -39,4 +39,3 @@ form input, form select, form button {
   flex: 1 1 100%;
   min-width: 120px;
 }
-

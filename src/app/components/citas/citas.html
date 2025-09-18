@@ -1,0 +1,38 @@
+<div class="citas-container">
+  <h2>Citas</h2>
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" name="cliente" [(ngModel)]="cita.cliente" placeholder="Cliente" required />
+    <input type="date" name="fecha" [(ngModel)]="cita.fecha" required />
+    <input type="time" name="hora" [(ngModel)]="cita.hora" required />
+    <select name="sucursal_id" [(ngModel)]="cita.sucursal_id" required>
+      <option *ngFor="let s of sucursales" [value]="s.id">{{ s.nombre }}</option>
+    </select>
+    <button type="submit">{{ cita.id ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" *ngIf="cita.id" (click)="resetForm()">Cancelar</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Sucursal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of citas">
+        <td>{{ c.id }}</td>
+        <td>{{ c.cliente }}</td>
+        <td>{{ c.fecha | date:'shortDate' }}</td>
+        <td>{{ c.hora }}</td>
+        <td>{{ getSucursalNombre(c.sucursal_id) }}</td>
+        <td>
+          <button (click)="editCita(c)">Editar</button>
+          <button (click)="deleteCita(c.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

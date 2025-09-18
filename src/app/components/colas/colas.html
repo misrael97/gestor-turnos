@@ -1,0 +1,30 @@
+<div class="colas-container">
+  <h2>Colas</h2>
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" name="nombre" [(ngModel)]="cola.nombre" placeholder="Nombre de la cola" required />
+    <input type="text" name="descripcion" [(ngModel)]="cola.descripcion" placeholder="Descripción" required />
+    <button type="submit">{{ cola.id ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" *ngIf="cola.id" (click)="resetForm()">Cancelar</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of colas">
+        <td>{{ c.id }}</td>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.descripcion }}</td>
+        <td>
+          <button (click)="editCola(c)">Editar</button>
+          <button (click)="deleteCola(c.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

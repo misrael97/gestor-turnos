@@ -1,4 +1,4 @@
-.negocios-container {
+.reportes-container {
   padding: 1rem;
 }
 
@@ -30,13 +30,8 @@
     content: attr(data-label);
   }
 }
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+input[type="date"] {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 1rem;
 }
-form input, form select, form button {
-  flex: 1 1 100%;
-  min-width: 120px;
-}
-

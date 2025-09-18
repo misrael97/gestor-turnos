@@ -1,4 +1,4 @@
-.negocios-container {
+.alertas-container {
   padding: 1rem;
 }
 
@@ -30,13 +30,3 @@
     content: attr(data-label);
   }
 }
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-form input, form select, form button {
-  flex: 1 1 100%;
-  min-width: 120px;
-}
-

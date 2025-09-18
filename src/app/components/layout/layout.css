@@ -14,3 +14,14 @@
 .main-content.collapsed {
   margin-left: 0;
 }
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 0 !important;
+    padding: 1rem 0.5rem;
+  }
+}
+@media (max-width: 600px) {
+  .main-content {
+    padding: 0.5rem 0.2rem;
+  }
+}

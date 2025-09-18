@@ -1,0 +1,22 @@
+<div class="reportes-container">
+  <h2>Reportes</h2>
+  <input type="date" [(ngModel)]="filtroFecha" (change)="filtrar()" />
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Turnos Atendidos</th>
+        <th>Tiempo Promedio de Espera</th>
+        <th>Productividad de Agentes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of reportes">
+        <td>{{ r.fecha }}</td>
+        <td>{{ r.turnos_atendidos }}</td>
+        <td>{{ r.tiempo_promedio_espera }}</td>
+        <td>{{ r.productividad_agentes }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

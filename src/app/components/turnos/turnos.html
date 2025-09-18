@@ -1,0 +1,46 @@
+<div class="turnos-container">
+  <h2>Turnos</h2>
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" name="numero" [(ngModel)]="turno.numero" placeholder="Número de turno" required />
+    <input type="text" name="cliente" [(ngModel)]="turno.cliente" placeholder="Cliente" required />
+    <select name="cola_id" [(ngModel)]="turno.cola_id" required>
+      <option *ngFor="let c of colas" [value]="c.id">{{ c.nombre }}</option>
+    </select>
+    <input type="date" name="fecha" [(ngModel)]="turno.fecha" required />
+    <select name="estado" [(ngModel)]="turno.estado" required>
+      <option value="espera">En espera</option>
+      <option value="llamado">Llamado</option>
+      <option value="atendido">Atendido</option>
+      <option value="cancelado">Cancelado</option>
+    </select>
+    <button type="submit">{{ turno.id ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" *ngIf="turno.id" (click)="resetForm()">Cancelar</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Número</th>
+        <th>Cliente</th>
+        <th>Cola</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of turnos">
+        <td>{{ t.id }}</td>
+        <td>{{ t.numero }}</td>
+        <td>{{ t.cliente }}</td>
+        <td>{{ getColaNombre(t.cola_id) }}</td>
+        <td>{{ t.fecha | date:'shortDate' }}</td>
+        <td>{{ t.estado }}</td>
+        <td>
+          <button (click)="editTurno(t)">Editar</button>
+          <button (click)="deleteTurno(t.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -19,6 +19,26 @@ export const routes: Routes = [
       { path: 'negocios', component: NegociosComponent },
       { path: 'sucursales', component: SucursalesComponent },
       { path: 'gestores', component: GestoresComponent },
+      {
+        path: 'turnos',
+        loadComponent: () => import('./components/turnos/turnos').then(m => m.TurnosComponent)
+      },
+      {
+        path: 'colas',
+        loadComponent: () => import('./components/colas/colas').then(m => m.ColasComponent)
+      },
+      {
+        path: 'citas',
+        loadComponent: () => import('./components/citas/citas').then(m => m.CitasComponent)
+      },
+      {
+        path: 'reportes',
+        loadComponent: () => import('./components/reportes/reportes').then(m => m.ReportesComponent)
+      },
+      {
+        path: 'alertas',
+        loadComponent: () => import('./components/alertas/alertas').then(m => m.AlertasComponent)
+      },
     ]
   }
 ];
