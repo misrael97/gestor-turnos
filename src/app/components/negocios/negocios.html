@@ -1,0 +1,31 @@
+<div class="negocios-container">
+  <h2>Negocios</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" name="nombre" [(ngModel)]="negocio.nombre" placeholder="Nombre del negocio" required />
+    <button type="submit">{{ negocio.id ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" *ngIf="negocio.id" (click)="resetForm()">Cancelar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Fecha de creación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let n of negocios">
+        <td>{{ n.id }}</td>
+        <td>{{ n.nombre }}</td>
+        <td>{{ n.fecha_creacion | date:'short' }}</td>
+        <td>
+          <button (click)="editNegocio(n)">Editar</button>
+          <button (click)="deleteNegocio(n.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

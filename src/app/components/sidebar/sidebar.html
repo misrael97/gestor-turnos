@@ -1,0 +1,20 @@
+<nav class="sidebar" [class.collapsed]="collapsed">
+  <div class="sidebar-header">
+    <div class="logo">AdminPro</div>
+    <button class="toggle-btn" (click)="toggle.emit()" [attr.aria-label]="collapsed ? 'Expandir menú' : 'Colapsar menú'">
+      <span *ngIf="!collapsed">«</span>
+      <span *ngIf="collapsed">»</span>
+    </button>
+    <div class="user" *ngIf="!collapsed">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Usuario" class="avatar" />
+      <span class="username">Leonard2</span>
+    </div>
+  </div>
+  <ul class="sidebar-menu">
+    <li><a routerLink="/dashboard" routerLinkActive="active"><span>Principal</span></a></li>
+    <li class="menu-title" *ngIf="!collapsed">Mantenimientos</li>
+    <li><a routerLink="/negocios" routerLinkActive="active">Negocios</a></li>
+    <li><a routerLink="/sucursales" routerLinkActive="active">Sucursales</a></li>
+    <li><a routerLink="/gestores" routerLinkActive="active">Gestores</a></li>
+  </ul>
+</nav>

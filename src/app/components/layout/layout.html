@@ -1,0 +1,7 @@
+<div class="layout">
+  <app-sidebar [collapsed]="sidebarCollapsed" (toggle)="toggleSidebar()"></app-sidebar>
+  <button class="toggle-btn-floating" *ngIf="sidebarCollapsed" (click)="toggleSidebar()" aria-label="Expandir menú">»</button>
+  <main class="main-content" [class.collapsed]="sidebarCollapsed">
+    <router-outlet></router-outlet>
+  </main>
+</div>

@@ -1,0 +1,38 @@
+<div class="gestores-container">
+  <h2>Gestores</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" name="name" [(ngModel)]="gestor.name" placeholder="Nombre" required />
+    <input type="email" name="email" [(ngModel)]="gestor.email" placeholder="Email" required />
+    <input type="password" name="password" [(ngModel)]="gestor.password" placeholder="Contraseña" [required]="!gestor.id" />
+    <select name="sucursal_id" [(ngModel)]="gestor.sucursal_id" required>
+      <option *ngFor="let s of sucursales" [value]="s.id">{{ s.nombre }}</option>
+    </select>
+    <button type="submit">{{ gestor.id ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" *ngIf="gestor.id" (click)="resetForm()">Cancelar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Sucursal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let g of gestores">
+        <td>{{ g.id }}</td>
+        <td>{{ g.name }}</td>
+        <td>{{ g.email }}</td>
+        <td>{{ getSucursalNombre(g.sucursal_id) }}</td>
+        <td>
+          <button (click)="editGestor(g)">Editar</button>
+          <button (click)="deleteGestor(g.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

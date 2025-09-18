@@ -1,0 +1,37 @@
+<div class="sucursales-container">
+  <h2>Sucursales</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <select name="negocio_id" [(ngModel)]="sucursal.negocio_id" (change)="getSucursales()" required>
+      <option *ngFor="let n of negocios" [value]="n.id">{{ n.nombre }}</option>
+    </select>
+    <input type="text" name="nombre" [(ngModel)]="sucursal.nombre" placeholder="Nombre de la sucursal" required />
+    <input type="text" name="direccion" [(ngModel)]="sucursal.direccion" placeholder="Dirección" required />
+    <button type="submit">{{ sucursal.id ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" *ngIf="sucursal.id" (click)="resetForm()">Cancelar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Negocio</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of sucursales">
+        <td>{{ s.id }}</td>
+        <td>{{ getNegocioNombre(s.negocio_id) }}</td>
+        <td>{{ s.nombre }}</td>
+        <td>{{ s.direccion }}</td>
+        <td>
+          <button (click)="editSucursal(s)">Editar</button>
+          <button (click)="deleteSucursal(s.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

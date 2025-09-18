@@ -1,0 +1,16 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+.main-content {
+  margin-left: 250px;
+  padding: 2rem 2rem 2rem 2rem;
+  background: #f4f6fa;
+  width: 100%;
+  min-height: 100vh;
+  transition: margin-left 0.2s;
+}
+.sidebar.collapsed ~ .main-content,
+.main-content.collapsed {
+  margin-left: 0;
+}
