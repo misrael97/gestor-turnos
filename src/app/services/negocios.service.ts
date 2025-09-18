@@ -28,3 +28,4 @@ export class NegociosService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
+

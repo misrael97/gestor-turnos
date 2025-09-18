@@ -28,3 +28,4 @@ export class SucursalesService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
+

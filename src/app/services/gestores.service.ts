@@ -28,3 +28,4 @@ export class GestoresService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }
+
