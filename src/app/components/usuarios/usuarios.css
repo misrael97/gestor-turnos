@@ -1,0 +1,45 @@
+.usuarios-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.usuarios-container h2 {
+  margin-bottom: 1rem;
+}
+.usuarios-container form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.usuarios-container input, .usuarios-container select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.usuarios-container button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #1976d2;
+  color: #fff;
+  cursor: pointer;
+}
+.usuarios-container button[type="button"] {
+  background: #aaa;
+}
+.usuarios-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.usuarios-container th, .usuarios-container td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.usuarios-container th {
+  background: #f4f6fa;
+}

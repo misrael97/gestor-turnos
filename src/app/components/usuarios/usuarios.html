@@ -1,0 +1,36 @@
+<div class="usuarios-container">
+  <h2>Usuarios</h2>
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" name="name" [(ngModel)]="usuario.name" placeholder="Nombre" required />
+    <input type="email" name="email" [(ngModel)]="usuario.email" placeholder="Email" required />
+    <input type="password" name="password" [(ngModel)]="usuario.password" placeholder="Contraseña" [required]="!usuario.id" />
+    <select name="role" [(ngModel)]="usuario.role" required>
+      <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+    </select>
+    <button type="submit">{{ usuario.id ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" *ngIf="usuario.id" (click)="resetForm()">Cancelar</button>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usuarios">
+        <td>{{ u.id }}</td>
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.role }}</td>
+        <td>
+          <button (click)="editUsuario(u)">Editar</button>
+          <button (click)="deleteUsuario(u.id)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

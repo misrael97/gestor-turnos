@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ColasService } from '../../services/colas.service';
 
 @Component({
   selector: 'app-colas',
@@ -13,12 +14,30 @@ export class ColasComponent implements OnInit {
   colas: any[] = [];
   cola: any = { nombre: '', descripcion: '' };
 
+  constructor(private colasService: ColasService) {}
+
   ngOnInit() {
-    // TODO: Lógica para cargar colas
+    this.getColas();
+  }
+
+  getColas() {
+    this.colasService.getColas().subscribe(data => {
+      this.colas = data;
+    });
   }
 
   onSubmit() {
-    // TODO: Lógica para crear/actualizar cola
+    if (this.cola.id) {
+      this.colasService.updateCola(this.cola.id, this.cola).subscribe(() => {
+        this.getColas();
+        this.resetForm();
+      });
+    } else {
+      this.colasService.createCola(this.cola).subscribe(() => {
+        this.getColas();
+        this.resetForm();
+      });
+    }
   }
 
   editCola(c: any) {
@@ -26,10 +45,16 @@ export class ColasComponent implements OnInit {
   }
 
   deleteCola(id: number) {
-    // TODO: Lógica para eliminar cola
+    if (confirm('¿Seguro que deseas eliminar esta cola?')) {
+      this.colasService.deleteCola(id).subscribe(() => {
+        this.getColas();
+      });
+    }
   }
 
   resetForm() {
     this.cola = { nombre: '', descripcion: '' };
   }
 }
+
+

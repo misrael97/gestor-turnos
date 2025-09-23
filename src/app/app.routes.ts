@@ -6,6 +6,7 @@ import { NegociosComponent } from './components/negocios/negocios';
 import { SucursalesComponent } from './components/sucursales/sucursales';
 import { GestoresComponent } from './components/gestores/gestores';
 import { LayoutComponent } from './components/layout/layout';
+import { UsuariosComponent } from './components/usuarios/usuarios';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,6 +20,7 @@ export const routes: Routes = [
       { path: 'negocios', component: NegociosComponent },
       { path: 'sucursales', component: SucursalesComponent },
       { path: 'gestores', component: GestoresComponent },
+      { path: 'usuarios', component: UsuariosComponent },
       {
         path: 'turnos',
         loadComponent: () => import('./components/turnos/turnos').then(m => m.TurnosComponent)

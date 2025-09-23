@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TurnosService } from '../../services/turnos.service';
+import { ColasService } from '../../services/colas.service';
 
 @Component({
   selector: 'app-turnos',
@@ -14,8 +16,23 @@ export class TurnosComponent implements OnInit {
   turno: any = { numero: '', estado: '', cliente: '', cola_id: '', fecha: '' };
   colas: any[] = [];
 
+  constructor(private turnosService: TurnosService, private colasService: ColasService) {}
+
   ngOnInit() {
-    // TODO: Lógica para cargar turnos y colas
+    this.getTurnos();
+    this.getColas();
+  }
+
+  getTurnos() {
+    this.turnosService.getTurnos().subscribe(data => {
+      this.turnos = data;
+    });
+  }
+
+  getColas() {
+    this.colasService.getColas().subscribe(data => {
+      this.colas = data;
+    });
   }
 
   getColaNombre(id: number) {
@@ -24,7 +41,17 @@ export class TurnosComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: Lógica para crear/actualizar turno
+    if (this.turno.id) {
+      this.turnosService.updateTurno(this.turno.id, this.turno).subscribe(() => {
+        this.getTurnos();
+        this.resetForm();
+      });
+    } else {
+      this.turnosService.createTurno(this.turno).subscribe(() => {
+        this.getTurnos();
+        this.resetForm();
+      });
+    }
   }
 
   editTurno(t: any) {
@@ -32,10 +59,16 @@ export class TurnosComponent implements OnInit {
   }
 
   deleteTurno(id: number) {
-    // TODO: Lógica para eliminar turno
+    if (confirm('¿Seguro que deseas eliminar este turno?')) {
+      this.turnosService.deleteTurno(id).subscribe(() => {
+        this.getTurnos();
+      });
+    }
   }
 
   resetForm() {
     this.turno = { numero: '', estado: '', cliente: '', cola_id: '', fecha: '' };
   }
 }
+
+

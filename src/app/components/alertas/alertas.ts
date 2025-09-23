@@ -19,3 +19,5 @@ export class AlertasComponent implements OnInit {
     // TODO: Lógica para atender alerta
   }
 }
+
+
