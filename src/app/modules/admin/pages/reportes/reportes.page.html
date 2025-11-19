@@ -1,0 +1,170 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarReportes($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+    <!-- Segmentos para diferentes tipos de reportes -->
+    <ion-segment [(ngModel)]="segmentValue" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="globales">
+        <ion-label>Globales</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="dia">
+        <ion-label>Del Día</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="espera">
+        <ion-label>Espera</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="productividad">
+        <ion-label>Productividad</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+
+    <!-- REPORTES GLOBALES -->
+    <div *ngIf="!loading && segmentValue === 'globales'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-card color="primary">
+              <ion-card-content class="ion-text-center">
+                <ion-icon name="receipt" style="font-size: 32px;"></ion-icon>
+                <h2>{{ reportes.totalTurnos || 0 }}</h2>
+                <p>Total Turnos</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6">
+            <ion-card color="success">
+              <ion-card-content class="ion-text-center">
+                <ion-icon name="calendar" style="font-size: 32px;"></ion-icon>
+                <h2>{{ reportes.turnosHoy || 0 }}</h2>
+                <p>Turnos Hoy</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-card color="tertiary">
+              <ion-card-content class="ion-text-center">
+                <ion-icon name="people" style="font-size: 32px;"></ion-icon>
+                <h2>{{ reportes.usuariosActivos || 0 }}</h2>
+                <p>Usuarios Activos</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col size="6">
+            <ion-card color="warning">
+              <ion-card-content class="ion-text-center">
+                <ion-icon name="time" style="font-size: 32px;"></ion-icon>
+                <h2>{{ reportes.turnosPendientes || 0 }}</h2>
+                <p>Pendientes</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button expand="block" color="medium" (click)="descargarPDF('globales')">
+        <ion-icon name="download" slot="start"></ion-icon>
+        Descargar PDF
+      </ion-button>
+    </div>
+
+    <!-- REPORTES DEL DÍA -->
+    <div *ngIf="!loading && segmentValue === 'dia'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Estadísticas del Día</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>Total Turnos</ion-label>
+              <ion-badge slot="end">{{ reportesDia.turnos || 0 }}</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label>Atendidos</ion-label>
+              <ion-badge slot="end" color="success">{{ reportesDia.atendidos || 0 }}</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label>Cancelados</ion-label>
+              <ion-badge slot="end" color="danger">{{ reportesDia.cancelados || 0 }}</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label>Pendientes</ion-label>
+              <ion-badge slot="end" color="warning">{{ reportesDia.pendientes || 0 }}</ion-badge>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-button expand="block" color="medium" (click)="descargarPDF('dia')">
+        <ion-icon name="download" slot="start"></ion-icon>
+        Descargar PDF
+      </ion-button>
+    </div>
+
+    <!-- REPORTES DE ESPERA -->
+    <div *ngIf="!loading && segmentValue === 'espera'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Tiempos de Espera</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>Promedio</ion-label>
+              <ion-badge slot="end" color="primary">{{ reportesEspera.promedioEspera || 0 }} min</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label>Mínimo</ion-label>
+              <ion-badge slot="end" color="success">{{ reportesEspera.tiempoMinimo || 0 }} min</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label>Máximo</ion-label>
+              <ion-badge slot="end" color="danger">{{ reportesEspera.tiempoMaximo || 0 }} min</ion-badge>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-button expand="block" color="medium" (click)="descargarPDF('espera')">
+        <ion-icon name="download" slot="start"></ion-icon>
+        Descargar PDF
+      </ion-button>
+    </div>
+
+    <!-- REPORTES DE PRODUCTIVIDAD -->
+    <div *ngIf="!loading && segmentValue === 'productividad'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Métricas de Productividad</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>Eficiencia</ion-label>
+              <ion-badge slot="end" color="success">{{ reportesProductividad.eficiencia || 0 }}%</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label>Turnos por Hora</ion-label>
+              <ion-badge slot="end">{{ reportesProductividad.turnosPorHora || 0 }}</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label>Tasa de Cancelación</ion-label>
+              <ion-badge slot="end" color="warning">{{ reportesProductividad.tasaCancelacion || 0 }}%</ion-badge>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-button expand="block" color="medium" (click)="descargarPDF('productividad')">
+        <ion-icon name="download" slot="start"></ion-icon>
+        Descargar PDF
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

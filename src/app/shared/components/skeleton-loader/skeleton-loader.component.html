@@ -1,0 +1,47 @@
+<!-- Card Skeleton -->
+<ng-container *ngIf="type === 'card'">
+  <ion-card *ngFor="let item of items" class="skeleton-card" [class.animated]="animated">
+    <ion-card-content>
+      <div class="skeleton-line skeleton-header"></div>
+      <div class="skeleton-line skeleton-text"></div>
+      <div class="skeleton-line skeleton-text short"></div>
+    </ion-card-content>
+  </ion-card>
+</ng-container>
+
+<!-- List Skeleton -->
+<ng-container *ngIf="type === 'list'">
+  <ion-item *ngFor="let item of items" lines="full" class="skeleton-item" [class.animated]="animated">
+    <div class="skeleton-avatar" slot="start"></div>
+    <ion-label>
+      <div class="skeleton-line skeleton-text"></div>
+      <div class="skeleton-line skeleton-text short"></div>
+    </ion-label>
+  </ion-item>
+</ng-container>
+
+<!-- Avatar Skeleton -->
+<ng-container *ngIf="type === 'avatar'">
+  <div class="skeleton-avatar-container" [class.animated]="animated">
+    <div class="skeleton-avatar large"></div>
+    <div class="skeleton-line skeleton-text"></div>
+  </div>
+</ng-container>
+
+<!-- Text Skeleton -->
+<ng-container *ngIf="type === 'text'">
+  <div *ngFor="let item of items" class="skeleton-text-container" [class.animated]="animated">
+    <div class="skeleton-line skeleton-text"></div>
+  </div>
+</ng-container>
+
+<!-- Form Skeleton -->
+<ng-container *ngIf="type === 'form'">
+  <div class="skeleton-form" [class.animated]="animated">
+    <div class="skeleton-form-group" *ngFor="let item of items">
+      <div class="skeleton-line skeleton-label"></div>
+      <div class="skeleton-line skeleton-input"></div>
+    </div>
+    <div class="skeleton-line skeleton-button"></div>
+  </div>
+</ng-container>

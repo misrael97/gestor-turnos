@@ -1,0 +1,23 @@
+<ion-content class="ion-padding">
+  <div class="login-container">
+    <h1>PWA Gestor de Turnos</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-input type="email" placeholder="Correo" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" placeholder="Contraseña" formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" color="primary" [disabled]="loading">
+        {{ loading ? 'Entrando...' : 'Iniciar Sesión' }}
+      </ion-button>
+
+      <p class="text-center ion-margin-top">
+        ¿No tienes cuenta?
+        <a routerLink="/auth/register">Regístrate</a>
+      </p>
+    </form>
+  </div>
+</ion-content>

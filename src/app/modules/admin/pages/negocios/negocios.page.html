@@ -1,0 +1,97 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarNegocios()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+    <!-- Formulario -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ editando ? 'Editar Sucursal' : 'Nueva Sucursal' }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="negocioForm" (ngSubmit)="crearNegocio()">
+          <ion-item>
+            <ion-label position="floating">Nombre de la Sucursal *</ion-label>
+            <ion-input formControlName="nombre" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Dirección *</ion-label>
+            <ion-input formControlName="direccion" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Teléfono</ion-label>
+            <ion-input formControlName="telefono" type="tel"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Horario</ion-label>
+            <ion-input formControlName="horario" type="text" placeholder="Ej: Lun-Vie 9am-6pm"></ion-input>
+          </ion-item>
+
+          <!-- Selector de Agente -->
+          <ion-item>
+            <ion-label position="floating">Agente Responsable</ion-label>
+            <ion-select formControlName="agente_id" placeholder="Selecciona un agente">
+              <ion-select-option [value]="null">Sin asignar</ion-select-option>
+              <ion-select-option *ngFor="let a of agentes" [value]="a.id">{{ a.name }} - {{ a.email }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <div class="ion-margin-top">
+            <ion-button expand="block" type="submit" color="success">
+              <ion-icon slot="start" :name="editando ? 'checkmark' : 'add'"></ion-icon>
+              {{ editando ? 'Actualizar' : 'Crear' }} Sucursal
+            </ion-button>
+            <ion-button *ngIf="editando" expand="block" fill="outline" color="medium" (click)="cancelarEdicion()">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Cancelar
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Lista de Sucursales -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Sucursales Registradas ({{ negocios.length }})</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+
+        <ion-list *ngIf="!loading && negocios.length > 0">
+          <ion-item *ngFor="let negocio of negocios">
+            <ion-label>
+              <h2><strong>{{ negocio.nombre }}</strong></h2>
+              <p><ion-icon name="location"></ion-icon> {{ negocio.direccion }}</p>
+              <p *ngIf="negocio.telefono"><ion-icon name="call"></ion-icon> {{ negocio.telefono }}</p>
+              <p *ngIf="negocio.horario"><ion-icon name="time"></ion-icon> {{ negocio.horario }}</p>
+              <p *ngIf="negocio.agente">
+                <ion-badge color="warning">
+                  <ion-icon name="person" style="font-size: 12px;"></ion-icon>
+                  Agente: {{ negocio.agente.name }}
+                </ion-badge>
+              </p>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button color="primary" (click)="editarNegocio(negocio)">
+                <ion-icon name="create"></ion-icon>
+              </ion-button>
+              <ion-button color="danger" (click)="confirmarEliminar(negocio)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+
+        <ion-card *ngIf="!loading && negocios.length === 0">
+          <ion-card-content class="ion-text-center">
+            <ion-icon name="business-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
+            <p>No hay sucursales registradas</p>
+            <p class="ion-text-muted">Crea la primera sucursal usando el formulario de arriba</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

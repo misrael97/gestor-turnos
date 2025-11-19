@@ -1,0 +1,36 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarHistorial($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+    <!-- Skeleton Loader -->
+    <app-skeleton-loader *ngIf="loading" type="list" [count]="5" [animated]="true"></app-skeleton-loader>
+
+    <ion-list *ngIf="!loading && historial.length > 0" class="animated-list">
+      <ion-item *ngFor="let turno of historial">
+        <ion-avatar slot="start">
+          <ion-icon 
+            [name]="turno.estado === 'atendido' ? 'checkmark-circle' : turno.estado === 'cancelado' ? 'close-circle' : 'time'"
+            [color]="getColor(turno.estado)"
+            style="font-size: 32px;">
+          </ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2><strong>Turno #{{ turno.numero || turno.id }}</strong></h2>
+          <p>{{ turno.sucursal?.nombre || 'Sucursal' }}</p>
+          <p class="ion-text-muted">{{ turno.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
+        </ion-label>
+        <ion-badge slot="end" [color]="getColor(turno.estado)">
+          {{ turno.estado }}
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+
+    <div *ngIf="!loading && historial.length === 0" class="ion-text-center empty-state" style="margin-top: 50px;">
+      <ion-icon name="receipt-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
+      <h3>Sin historial</h3>
+      <p class="ion-text-muted">Tus turnos anteriores aparecerán aquí</p>
+    </div>
+  </div>
+</ion-content>

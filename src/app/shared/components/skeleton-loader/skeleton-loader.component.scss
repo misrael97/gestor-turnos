@@ -1,0 +1,152 @@
+// Animación de pulsación
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+// Clase base para animación
+.animated {
+  .skeleton-line,
+  .skeleton-avatar {
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+    background: linear-gradient(
+      90deg,
+      #f0f0f0 0%,
+      #e0e0e0 20%,
+      #f0f0f0 40%,
+      #f0f0f0 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s linear infinite;
+  }
+}
+
+// Líneas base
+.skeleton-line {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  
+  &.skeleton-header {
+    height: 24px;
+    width: 60%;
+  }
+  
+  &.skeleton-text {
+    height: 16px;
+    width: 100%;
+    
+    &.short {
+      width: 75%;
+    }
+  }
+  
+  &.skeleton-label {
+    height: 14px;
+    width: 30%;
+    margin-bottom: 8px;
+  }
+  
+  &.skeleton-input {
+    height: 48px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  &.skeleton-button {
+    height: 44px;
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+}
+
+// Card Skeleton
+.skeleton-card {
+  margin: 16px;
+  
+  ion-card-content {
+    padding: 16px;
+  }
+}
+
+// List Item Skeleton
+.skeleton-item {
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  --min-height: 68px;
+}
+
+// Avatar Skeleton
+.skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  flex-shrink: 0;
+  
+  &.large {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.skeleton-avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  
+  .skeleton-text {
+    width: 120px;
+  }
+}
+
+// Text Skeleton
+.skeleton-text-container {
+  padding: 8px 16px;
+}
+
+// Form Skeleton
+.skeleton-form {
+  padding: 20px;
+  
+  .skeleton-form-group {
+    margin-bottom: 20px;
+  }
+}
+
+// Variaciones de tamaño
+.skeleton-xs {
+  height: 12px !important;
+}
+
+.skeleton-sm {
+  height: 16px !important;
+}
+
+.skeleton-md {
+  height: 20px !important;
+}
+
+.skeleton-lg {
+  height: 24px !important;
+}
+
+.skeleton-xl {
+  height: 32px !important;
+}

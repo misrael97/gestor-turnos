@@ -1,0 +1,27 @@
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <h1>Crear Cuenta</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-input placeholder="Nombre completo" formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="email" placeholder="Correo electrónico" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" placeholder="Contraseña" formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" color="primary" type="submit">
+        Registrarse
+      </ion-button>
+
+      <p class="text-center ion-margin-top">
+        ¿Ya tienes cuenta?
+        <a routerLink="/auth/login">Inicia sesión</a>
+      </p>
+    </form>
+  </div>
+</ion-content>

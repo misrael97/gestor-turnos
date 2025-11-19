@@ -1,0 +1,56 @@
+<ion-content>
+  <div class="ion-padding ion-text-center">
+    <div *ngIf="!escaneando">
+      <ion-icon name="qr-code-outline" style="font-size: 120px; color: var(--ion-color-primary);"></ion-icon>
+      
+      <h1>Escanear QR del Cliente</h1>
+      <p class="ion-text-muted">
+        Escanea el código QR del turno del cliente para validarlo y marcarlo como atendido
+      </p>
+
+      <ion-button 
+        expand="block" 
+        size="large" 
+        color="primary" 
+        (click)="iniciarEscaneo()"
+        [disabled]="!permisoCamara">
+        <ion-icon name="scan" slot="start"></ion-icon>
+        Iniciar Escaneo
+      </ion-button>
+
+      <ion-note *ngIf="!permisoCamara" color="danger">
+        <ion-icon name="warning"></ion-icon>
+        Se requiere permiso de cámara
+      </ion-note>
+
+      <!-- Instrucciones -->
+      <ion-card class="ion-margin-top">
+        <ion-card-header>
+          <ion-card-title>Instrucciones</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ol style="text-align: left;">
+            <li>Pide al cliente que muestre su código QR</li>
+            <li>Presiona "Iniciar Escaneo"</li>
+            <li>Apunta la cámara hacia el código QR</li>
+            <li>Espera la validación automática</li>
+            <li>Confirma para marcar como atendido</li>
+          </ol>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div *ngIf="escaneando">
+      <div id="qr-reader" style="width: 100%; max-width: 500px; margin: 0 auto;"></div>
+      
+      <ion-button 
+        expand="block" 
+        color="danger" 
+        (click)="detenerEscaneo()"
+        class="ion-margin-top">
+        <ion-icon name="close" slot="start"></ion-icon>
+        Cancelar
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

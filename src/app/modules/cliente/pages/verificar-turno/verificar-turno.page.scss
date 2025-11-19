@@ -1,0 +1,38 @@
+.turno-numero {
+  font-size: 5rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--ion-color-primary);
+  padding: 1rem 0;
+}
+
+ion-card {
+  --background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 1rem 0;
+}
+
+ion-badge {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+ion-item {
+  --padding-start: 0;
+  
+  h3 {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+}
+
+ion-icon[size="large"] {
+  font-size: 4rem;
+  margin: 1rem 0;
+}

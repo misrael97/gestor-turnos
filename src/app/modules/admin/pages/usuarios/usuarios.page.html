@@ -1,0 +1,103 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarUsuarios($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+    <!-- Formulario -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ editando ? 'Editar Usuario' : 'Nuevo Usuario' }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="userForm" (ngSubmit)="crearUsuario()">
+          <ion-item>
+            <ion-label position="floating">Nombre *</ion-label>
+            <ion-input formControlName="name" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Correo Electrónico *</ion-label>
+            <ion-input formControlName="email" type="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">{{ editando ? 'Nueva Contraseña (dejar vacío si no cambia)' : 'Contraseña *' }}</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Rol *</ion-label>
+            <ion-select formControlName="role_id" placeholder="Selecciona un rol">
+              <ion-select-option *ngFor="let r of roles" [value]="r.id">{{ r.nombre }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- Selector de Sucursal (solo para Agentes) -->
+          <ion-item *ngIf="userForm.get('role_id')?.value === 2">
+            <ion-label position="floating">Sucursal Asignada</ion-label>
+            <ion-select formControlName="sucursal_id" placeholder="Selecciona una sucursal">
+              <ion-select-option [value]="null">Sin asignar</ion-select-option>
+              <ion-select-option *ngFor="let s of sucursales" [value]="s.id">{{ s.nombre }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <div class="ion-margin-top">
+            <ion-button expand="block" type="submit" color="success">
+              <ion-icon slot="start" :name="editando ? 'checkmark' : 'person-add'"></ion-icon>
+              {{ editando ? 'Actualizar' : 'Crear' }} Usuario
+            </ion-button>
+            <ion-button *ngIf="editando" expand="block" fill="outline" color="medium" (click)="cancelarEdicion()">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Cancelar
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Lista de Usuarios -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Usuarios Registrados ({{ usuarios.length }})</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+
+        <ion-list *ngIf="!loading && usuarios.length > 0">
+          <ion-item *ngFor="let u of usuarios">
+            <ion-avatar slot="start">
+              <ion-icon name="person-circle" style="font-size: 48px;"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2><strong>{{ u.name }}</strong></h2>
+              <p><ion-icon name="mail"></ion-icon> {{ u.email }}</p>
+              <p>
+                <ion-badge [color]="u.role_id === 1 ? 'danger' : u.role_id === 2 ? 'warning' : 'medium'">
+                  {{ u.role?.name || 'Rol ID: ' + u.role_id }}
+                </ion-badge>
+                <ion-badge *ngIf="u.role_id === 2 && u.sucursal" color="tertiary" style="margin-left: 5px;">
+                  <ion-icon name="business" style="font-size: 12px;"></ion-icon>
+                  {{ u.sucursal.nombre }}
+                </ion-badge>
+              </p>
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-button color="primary" (click)="editarUsuario(u)">
+                <ion-icon name="create"></ion-icon>
+              </ion-button>
+              <ion-button color="danger" (click)="confirmarEliminar(u)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+
+        <ion-card *ngIf="!loading && usuarios.length === 0">
+          <ion-card-content class="ion-text-center">
+            <ion-icon name="people-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
+            <p>No hay usuarios registrados</p>
+            <p class="ion-text-muted">Crea el primer usuario usando el formulario de arriba</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

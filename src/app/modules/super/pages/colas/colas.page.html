@@ -1,0 +1,68 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarTurnos($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+    <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+
+    <!-- Vista por Colas -->
+    <div *ngIf="!loading">
+      <ion-card *ngFor="let cola of colas">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="list"></ion-icon>
+            {{ cola }} ({{ getTurnosPorCola(cola).length }})
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list *ngIf="getTurnosPorCola(cola).length > 0">
+            <ion-item *ngFor="let turno of getTurnosPorCola(cola); let i = index">
+              <ion-badge slot="start" color="primary">{{ i + 1 }}</ion-badge>
+              <ion-label>
+                <h2><strong>Turno #{{ turno.numero || turno.id }}</strong></h2>
+                <p>{{ turno.user?.name || 'Cliente' }}</p>
+                <p class="ion-text-muted">{{ turno.created_at | date:'shortTime' }}</p>
+              </ion-label>
+              <ion-badge slot="end" [color]="turno.estado === 'llamado' ? 'success' : 'warning'">
+                {{ turno.estado }}
+              </ion-badge>
+              <ion-button slot="end" fill="clear" color="medium" (click)="reasignarCola(turno)">
+                <ion-icon name="swap-horizontal"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+
+          <div *ngIf="getTurnosPorCola(cola).length === 0" class="ion-text-center ion-padding">
+            <ion-icon name="checkmark-circle" style="font-size: 48px; color: #ccc;"></ion-icon>
+            <p class="ion-text-muted">No hay turnos en esta cola</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Todos los turnos sin cola asignada -->
+      <ion-card *ngIf="turnosSinCola.length > 0" color="light">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="help-circle"></ion-icon>
+            Sin Cola Asignada ({{ turnosSinCola.length }})
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let turno of turnosSinCola">
+              <ion-label>
+                <h2>Turno #{{ turno.numero || turno.id }}</h2>
+                <p>{{ turno.user?.name || 'Cliente' }}</p>
+              </ion-label>
+              <ion-button (click)="reasignarCola(turno)" color="primary">
+                <ion-icon name="add" slot="start"></ion-icon>
+                Asignar
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

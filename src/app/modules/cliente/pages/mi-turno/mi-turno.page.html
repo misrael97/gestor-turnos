@@ -1,0 +1,151 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarMiTurno(); $event.target.complete()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+    <!-- Skeleton Loader -->
+    <app-skeleton-loader *ngIf="loading" type="card" [count]="2" [animated]="true"></app-skeleton-loader>
+
+    <ng-container *ngIf="!loading && turno">
+      <!-- Posición en la cola -->
+      <ion-card color="primary" class="animated-card">
+        <ion-card-content class="ion-text-center">
+          <h1 style="font-size: 72px; margin: 0;" class="animate-scale-in">{{ posicion }}</h1>
+          <p style="font-size: 18px; margin: 10px 0 0 0;">
+            <strong>Posición en la cola</strong>
+          </p>
+          <p *ngIf="turnosDelante > 0" class="ion-text-muted animate-fade-in">
+            {{ turnosDelante }} {{ turnosDelante === 1 ? 'turno' : 'turnos' }} delante
+          </p>
+          <p *ngIf="turnosDelante === 0" style="color: #fff;" class="animate-bounce">
+            ¡Siguiente en atención!
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Detalles del turno -->
+      <ion-card class="animated-card">
+        <ion-card-header>
+          <ion-card-title>Tu turno</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6">
+                <p class="ion-text-muted">Número</p>
+                <h2><strong>{{ turno.numero || turno.id }}</strong></h2>
+              </ion-col>
+              <ion-col size="6">
+                <p class="ion-text-muted">Cola</p>
+                <h2>{{ turno.cola || 'General' }}</h2>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="turno.fecha_programada">
+              <ion-col size="6">
+                <p class="ion-text-muted">Fecha</p>
+                <p>{{ turno.fecha_programada }}</p>
+              </ion-col>
+              <ion-col size="6">
+                <p class="ion-text-muted">Hora</p>
+                <p>{{ turno.hora_programada }}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="turno.sucursal">
+              <ion-col>
+                <p class="ion-text-muted">Sucursal</p>
+                <p>{{ turno.sucursal.nombre }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          
+          <ion-badge [color]="turno.estado === 'llamado' ? 'success' : 'warning'">
+            {{ turno.estado }}
+          </ion-badge>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Código QR -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title class="ion-text-center">Código QR</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="ion-text-center">
+          <qrcode 
+            #qrcode
+            *ngIf="qrData" 
+            [qrdata]="qrData" 
+            [width]="256" 
+            [errorCorrectionLevel]="'M'"
+            [elementType]="'canvas'"
+            [margin]="4">
+          </qrcode>
+          <p class="ion-margin-top ion-text-muted">
+            <small>Presenta este código en la sucursal</small>
+          </p>
+          
+          <!-- Botón para descargar QR -->
+          <ion-button expand="block" fill="outline" color="primary" (click)="descargarQR()">
+            <ion-icon name="download" slot="start"></ion-icon>
+            Descargar QR
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Acciones -->
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button 
+              expand="block" 
+              color="success" 
+              (click)="confirmarTurno()"
+              [disabled]="confirmando"
+              class="ripple">
+              <ion-spinner *ngIf="confirmando" name="crescent" slot="start"></ion-spinner>
+              <ion-icon *ngIf="!confirmando" name="checkmark-circle" slot="start"></ion-icon>
+              {{ confirmando ? 'Confirmando...' : 'Confirmar' }}
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button 
+              expand="block" 
+              color="medium" 
+              (click)="descargarPDF()"
+              [disabled]="descargandoPDF"
+              class="ripple">
+              <ion-spinner *ngIf="descargandoPDF" name="crescent" slot="start"></ion-spinner>
+              <ion-icon *ngIf="!descargandoPDF" name="download" slot="start"></ion-icon>
+              {{ descargandoPDF ? 'Descargando...' : 'PDF' }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button 
+              expand="block" 
+              color="danger" 
+              fill="outline" 
+              (click)="cancelarTurno()"
+              [disabled]="cancelando"
+              class="ripple">
+              <ion-spinner *ngIf="cancelando" name="crescent" slot="start"></ion-spinner>
+              <ion-icon *ngIf="!cancelando" name="close-circle" slot="start"></ion-icon>
+              {{ cancelando ? 'Cancelando...' : 'Cancelar Turno' }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+
+    <div *ngIf="!loading && !turno" class="ion-text-center" style="margin-top: 50px;">
+      <ion-icon name="calendar-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
+      <h3>No tienes un turno activo</h3>
+      <p class="ion-text-muted">Solicita un turno desde la pantalla de inicio</p>
+      <ion-button (click)="navCtrl.navigateRoot('/cliente/home')" color="primary">
+        <ion-icon name="add-circle" slot="start"></ion-icon>
+        Solicitar Turno
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

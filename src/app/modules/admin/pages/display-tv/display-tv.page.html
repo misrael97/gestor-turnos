@@ -1,0 +1,44 @@
+<ion-content [fullscreen]="true" class="display-tv">
+  <div class="tv-container">
+    <!-- Header con nombre de sucursal -->
+    <div class="header-sucursal" *ngIf="sucursalNombre">
+      <h1>{{ sucursalNombre }}</h1>
+    </div>
+
+    <!-- Sección Superior: Turno Actual -->
+    <div class="current-section">
+      <div class="current-label">ACTU</div>
+      <div class="current-turno">
+        <div class="caja-label">{{ puestoNumero ? 'PUESTO ' + puestoNumero : 'CAJA' }}</div>
+        <div class="turno-number">{{ turnoActual }}</div>
+      </div>
+    </div>
+
+    <!-- Video/Publicidad -->
+    <div class="video-section">
+      <div class="video-placeholder">
+        <!-- Aquí iría video o imagen publicitaria -->
+        <img src="assets/publicidad.jpg" alt="Publicidad" *ngIf="!videoUrl">
+        <video [src]="videoUrl" autoplay loop muted *ngIf="videoUrl"></video>
+      </div>
+    </div>
+
+    <!-- Sección Inferior: Siguiente y En Espera -->
+    <div class="queue-section">
+      <div class="siguiente-box">
+        <div class="box-header">SIGUIENTE</div>
+        <div class="box-content">{{ siguienteTurno }}</div>
+      </div>
+      
+      <div class="espera-box">
+        <div class="box-header">EN ESPERA</div>
+        <div class="box-content">{{ turnosEnEspera }}</div>
+      </div>
+      
+      <div class="espera-box">
+        <div class="box-header">EN ESPERA</div>
+        <div class="box-content">{{ turnosEnEspera }}</div>
+      </div>
+    </div>
+  </div>
+</ion-content>

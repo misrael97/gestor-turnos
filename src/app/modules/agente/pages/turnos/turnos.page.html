@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestión de Turnos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="cargarTurnos()">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+    <ion-button expand="block" color="success" (click)="llamarSiguiente()">
+      <ion-icon slot="start" name="megaphone"></ion-icon>
+      Llamar Siguiente Turno
+    </ion-button>
+
+    <ion-list *ngIf="!loading && turnos.length > 0">
+      <ion-item *ngFor="let turno of turnos">
+        <ion-label>
+          <h2>Turno #{{ turno.numero }}</h2>
+          <p>Cliente: {{ turno.usuario?.name || 'Anónimo' }}</p>
+          <p>Estado: {{ turno.estado }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="primary" (click)="confirmarTurno(turno.id)">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" (click)="cancelarTurno(turno.id)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+    <ion-card *ngIf="!loading && turnos.length === 0">
+      <ion-card-content>
+        <p class="ion-text-center">No hay turnos pendientes</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+  </div>
+</ion-content>

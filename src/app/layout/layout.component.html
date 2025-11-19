@@ -1,0 +1,48 @@
+<!-- CONTENIDO PRINCIPAL -->
+<ion-split-pane contentId="mainContent">
+  <ion-menu side="start" menuId="mainMenu" contentId="mainContent">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>{{ user?.role?.nombre || user?.role?.name || 'Usuario' }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list lines="none">
+        <ion-menu-toggle auto-hide="true" *ngFor="let item of menuItems">
+          <ion-item button (click)="navegar(item.path)" detail="true">
+            <ion-icon [name]="item.icon" slot="start" color="primary"></ion-icon>
+            <ion-label>{{ item.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+
+      <ion-list lines="none">
+        <ion-item button (click)="cerrarSesion()" detail="true" color="light">
+          <ion-icon name="log-out" slot="start" color="danger"></ion-icon>
+          <ion-label color="danger">Cerrar Sesión</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="mainContent">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>{{ pageTitle }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button fill="clear">
+            <ion-icon name="notifications-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <router-outlet></router-outlet>
+    </ion-content>
+  </div>
+</ion-split-pane>
