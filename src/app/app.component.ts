@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@capacitor/splash-screen'
+import { SwUpdate } from '@angular/service-worker';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
@@ -8,12 +9,17 @@ import { AuthService } from './core/services/auth.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private swUpdate: SwUpdate
   ) {
     this.initializeApp();
+  }
+
+  ngOnInit() {
+    this.checkForUpdates();
   }
 
   initializeApp() {
@@ -53,6 +59,30 @@ export class AppComponent {
         console.log('🔄 Redirigiendo a módulo Cliente');
         this.router.navigate(['/cliente/home']);
       }
+    }
+  }
+
+  private checkForUpdates() {
+    if (this.swUpdate.isEnabled) {
+      console.log('🔄 PWA - Service Worker activo, verificando actualizaciones...');
+      
+      this.swUpdate.versionUpdates.subscribe(event => {
+        if (event.type === 'VERSION_READY') {
+          console.log('✅ PWA - Nueva versión disponible');
+          if (confirm('Nueva versión disponible. ¿Recargar ahora?')) {
+            window.location.reload();
+          }
+        }
+      });
+
+      // Verificar cada 30 segundos
+      setInterval(() => {
+        this.swUpdate.checkForUpdate().then(() => {
+          console.log('🔍 PWA - Verificación de actualizaciones completada');
+        });
+      }, 30000);
+    } else {
+      console.log('ℹ️ PWA - Service Worker deshabilitado (modo desarrollo)');
     }
   }
 }
