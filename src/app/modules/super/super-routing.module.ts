@@ -8,10 +8,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardPageModule)
   },
   {
-    path: 'display-tv',
-    loadChildren: () => import('./pages/display-tv/display-tv.module').then(m => m.DisplayTvPageModule)
-  },
-  {
     path: 'colas',
     loadChildren: () => import('./pages/colas/colas.module').then(m => m.ColasPageModule)
   },
