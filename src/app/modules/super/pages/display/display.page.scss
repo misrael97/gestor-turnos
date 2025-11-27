@@ -1,0 +1,110 @@
+.display-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: #f0f0f0;
+  font-family: 'Roboto', sans-serif; /* Or system font */
+
+  .sidebar {
+    width: 30%;
+    min-width: 300px;
+    background-color: #0044cc; /* Blue background */
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .su-turno-section {
+      background-color: #0044cc;
+      margin-bottom: 20px;
+
+      .header {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+      }
+
+      .turn-info {
+        display: flex;
+        background-color: #ffd700; /* Yellow background */
+        border-radius: 10px;
+        overflow: hidden;
+        
+        .numero-box, .puesto-box {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 10px;
+          
+          .label {
+            font-size: 0.9rem;
+            color: #333;
+          }
+
+          .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0044cc;
+          }
+        }
+
+        .numero-box {
+          border-right: 1px solid #ccc;
+        }
+      }
+    }
+
+    .numeros-llamados-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        padding-left: 5px;
+      }
+
+      .list-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .list-item {
+          background-color: #e6f2ff; /* Light blue */
+          border-radius: 5px;
+          padding: 10px 20px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 1.8rem;
+          font-weight: bold;
+          color: #0044cc;
+
+          .numero {
+            flex: 1;
+          }
+          
+          .puesto {
+            width: 50px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    background-color: #e0e0e0; /* Placeholder gray */
+    /* Add background image or video here later */
+  }
+}

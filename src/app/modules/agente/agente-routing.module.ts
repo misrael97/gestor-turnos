@@ -1,12 +1,18 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'turnos', pathMatch: 'full' },
+  { path: "", redirectTo: "turnos", pathMatch: "full" },
   {
-    path: 'turnos',
-    loadChildren: () => import('./pages/turnos/turnos.module').then(m => m.TurnosPageModule)
-  }
+    path: "turnos",
+    loadChildren: () =>
+      import("./pages/turnos/turnos.module").then((m) => m.TurnosPageModule),
+  },
+  {
+    path: "display",
+    loadChildren: () =>
+      import("./pages/display/display.module").then((m) => m.DisplayPageModule),
+  },
   // Módulo 'agente' deprecated - ahora se usa 'super'
   // {
   //   path: 'historial',
@@ -20,6 +26,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AgenteRoutingModule {}
