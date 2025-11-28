@@ -3,7 +3,9 @@
   <ion-menu side="start" menuId="mainMenu" contentId="mainContent">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>{{ user?.role?.nombre || user?.role?.name || 'Usuario' }}</ion-title>
+        <ion-title>{{
+          user?.role?.nombre || user?.role?.name || "Usuario"
+        }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -11,7 +13,11 @@
       <ion-list lines="none">
         <ion-menu-toggle auto-hide="true" *ngFor="let item of menuItems">
           <ion-item button (click)="navegar(item.path)" detail="true">
-            <ion-icon [name]="item.icon" slot="start" color="primary"></ion-icon>
+            <ion-icon
+              [name]="item.icon"
+              slot="start"
+              color="primary"
+            ></ion-icon>
             <ion-label>{{ item.title }}</ion-label>
           </ion-item>
         </ion-menu-toggle>
@@ -44,5 +50,22 @@
     <ion-content>
       <router-outlet></router-outlet>
     </ion-content>
+
+    <!-- BOTTOM NAVIGATION -->
+    <ion-footer class="bottom-navbar">
+      <ion-toolbar color="light">
+        <div class="nav-container">
+          <div
+            class="nav-item"
+            *ngFor="let item of menuItems"
+            [class.active]="isActive(item.path)"
+            (click)="navegar(item.path)"
+          >
+            <ion-icon [name]="item.icon"></ion-icon>
+            <span class="nav-label">{{ item.title }}</span>
+          </div>
+        </div>
+      </ion-toolbar>
+    </ion-footer>
   </div>
 </ion-split-pane>

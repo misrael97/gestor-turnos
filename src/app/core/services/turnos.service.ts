@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { AuthService } from './auth.service';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { AuthService } from "./auth.service";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class TurnosService {
   private api = `${environment.apiUrl}/turnos`;
   private apiSucursales = `${environment.apiUrl}/sucursales`;
@@ -29,23 +29,33 @@ export class TurnosService {
   verificarDisponibilidad(sucursal_id: number, fecha: string, hora: string) {
     return this.http.get(`${this.api}/disponibilidad`, {
       params: { sucursal_id: sucursal_id.toString(), fecha, hora },
-      headers: this.auth.headers
+      headers: this.auth.headers,
     });
   }
 
   llamarSiguiente() {
-    return this.http.put(`${this.api}/llamar`, {}, { headers: this.auth.headers });
+    return this.http.put(
+      `${this.api}/llamar`,
+      {},
+      { headers: this.auth.headers }
+    );
   }
 
   cancelarTurno(id: number) {
-    return this.http.delete(`${this.api}/${id}`, { headers: this.auth.headers });
+    return this.http.delete(`${this.api}/${id}`, {
+      headers: this.auth.headers,
+    });
   }
 
   historial() {
-    return this.http.get(`${this.api}/historial`, { headers: this.auth.headers });
+    return this.http.get(`${this.api}/historial`, {
+      headers: this.auth.headers,
+    });
   }
 
   reportes() {
-    return this.http.get(`${this.api}/reportes`, { headers: this.auth.headers });
+    return this.http.get(`${this.api}/reportes`, {
+      headers: this.auth.headers,
+    });
   }
 }
