@@ -95,7 +95,7 @@
       <!-- Acciones -->
       <ion-grid>
         <ion-row>
-          <ion-col>
+          <ion-col size="12">
             <ion-button 
               expand="block" 
               color="success" 
@@ -105,18 +105,6 @@
               <ion-spinner *ngIf="confirmando" name="crescent" slot="start"></ion-spinner>
               <ion-icon *ngIf="!confirmando" name="checkmark-circle" slot="start"></ion-icon>
               {{ confirmando ? 'Confirmando...' : 'Confirmar' }}
-            </ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button 
-              expand="block" 
-              color="medium" 
-              (click)="descargarPDF()"
-              [disabled]="descargandoPDF"
-              class="ripple">
-              <ion-spinner *ngIf="descargandoPDF" name="crescent" slot="start"></ion-spinner>
-              <ion-icon *ngIf="!descargandoPDF" name="download" slot="start"></ion-icon>
-              {{ descargandoPDF ? 'Descargando...' : 'PDF' }}
             </ion-button>
           </ion-col>
         </ion-row>

@@ -139,8 +139,7 @@ export class HomePage implements OnInit {
     this.loading = true;
     
     const datos = {
-      negocio_id: 1,
-      sucursal_id: this.sucursalSeleccionada,
+      negocio_id: this.sucursalSeleccionada, // ✅ Usar la sucursal seleccionada
       cola_id: 1,
       tipo: 'presencial'
     };
@@ -236,8 +235,7 @@ export class HomePage implements OnInit {
     fechaHora.setMinutes(horaSeleccionada.getMinutes());
     
     const datos = {
-      negocio_id: 1,
-      sucursal_id: this.sucursalSeleccionada,
+      negocio_id: this.sucursalSeleccionada, // ✅ Usar la sucursal seleccionada
       cola_id: 1,
       tipo: 'online',
       programado: true,
