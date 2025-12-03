@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AgenteRoutingModule } from './agente-routing.module';
+import { EmpleadoRoutingModule } from './empleado-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    AgenteRoutingModule
+    EmpleadoRoutingModule
   ]
 })
-export class AgenteModule { }
+export class EmpleadoModule { }

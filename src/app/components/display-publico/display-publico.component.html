@@ -1,0 +1,54 @@
+<ion-content [fullscreen]="true" class="display-fullscreen">
+  <div class="display-container">
+    <!-- Header con nombre de la sucursal -->
+    <div class="display-header">
+      <h1>{{ sucursalNombre }}</h1>
+      <p class="current-time">{{ currentTime | date:'shortTime' }}</p>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="display-body">
+      <!-- Sidebar izquierdo -->
+      <div class="sidebar">
+        <!-- Su Turno Section -->
+        <div class="su-turno-section">
+          <div class="header">SU TURNO</div>
+          <div class="turn-info">
+            <div class="numero-box">
+              <span class="label">Número</span>
+              <span class="value">{{ currentTurn.numero }}</span>
+            </div>
+            <div class="puesto-box">
+              <span class="label">Puesto</span>
+              <span class="value">{{ currentTurn.puesto }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Números Llamados Section -->
+        <div class="numeros-llamados-section">
+          <div class="header">NÚMEROS LLAMADOS</div>
+          <div class="list-container">
+            <div class="list-item" *ngFor="let item of calledNumbers">
+              <span class="numero">{{ item.numero }}</span>
+              <span class="puesto">{{ item.puesto }}</span>
+            </div>
+            <div *ngIf="calledNumbers.length === 0" class="empty-state">
+              <ion-icon name="time-outline"></ion-icon>
+              <p>Esperando turnos...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content (área derecha para contenido adicional) -->
+      <div class="main-content">
+        <div class="info-box">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <h2>Bienvenido</h2>
+          <p>Por favor espere a que su turno sea llamado</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

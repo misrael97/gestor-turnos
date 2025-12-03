@@ -7,6 +7,15 @@ import { RoleGuard } from "./core/guards/role.guard";
 const routes: Routes = [
   { path: "", redirectTo: "auth/login", pathMatch: "full" },
 
+  // 📺 RUTA PÚBLICA - Display de Turnos (sin autenticación, sin layout)
+  {
+    path: "display-publico/:id",
+    loadComponent: () =>
+      import("./components/display-publico/display-publico.component").then(
+        (m) => m.DisplayPublicoComponent
+      ),
+  },
+
   // RUTA PÚBLICA - Verificación de QR (sin autenticación)
   {
     path: "verificar-turno",
@@ -33,14 +42,14 @@ const routes: Routes = [
       import("./modules/cliente/cliente.module").then((m) => m.ClienteModule),
   },
 
-  // ADMINISTRADOR
+  // EMPLEADO - Atiende turnos en PWA
   {
-    path: "admin",
+    path: "empleado",
     component: LayoutComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { role: "Administrador" },
+    data: { role: "Empleado" },
     loadChildren: () =>
-      import("./modules/admin/admin.module").then((m) => m.AdminModule),
+      import("./modules/empleado/empleado.module").then((m) => m.EmpleadoModule),
   },
 
   // SUPER - Administrador de Sucursales (rol ID: 2 - Agente)
@@ -51,16 +60,6 @@ const routes: Routes = [
     data: { role: "Agente" },
     loadChildren: () =>
       import("./modules/super/super.module").then((m) => m.SuperModule),
-  },
-
-  // AGENTE - Display y otras vistas específicas
-  {
-    path: "agente",
-    component: LayoutComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { role: "Agente" },
-    loadChildren: () =>
-      import("./modules/agente/agente.module").then((m) => m.AgenteModule),
   },
 ];
 

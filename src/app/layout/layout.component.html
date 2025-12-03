@@ -1,6 +1,7 @@
 <!-- CONTENIDO PRINCIPAL -->
 <ion-split-pane contentId="mainContent">
-  <ion-menu side="start" menuId="mainMenu" contentId="mainContent">
+  <!-- Sidebar solo para Agente (role_id 2) -->
+  <ion-menu side="start" menuId="mainMenu" contentId="mainContent" *ngIf="mostrarSidebar()">
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>{{
@@ -33,7 +34,8 @@
   </ion-menu>
 
   <div class="ion-page" id="mainContent">
-    <ion-header>
+    <!-- Header para Agente (con menú hamburguesa) -->
+    <ion-header *ngIf="mostrarSidebar()">
       <ion-toolbar color="primary">
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
@@ -47,22 +49,34 @@
       </ion-toolbar>
     </ion-header>
 
+    <!-- Navbar horizontal para Cliente y Empleado -->
+    <ion-header *ngIf="!mostrarSidebar()">
+      <ion-toolbar color="primary">
+        <ion-title>{{ pageTitle }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="cerrarSesion()">
+            <ion-icon name="log-out-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content>
       <router-outlet></router-outlet>
     </ion-content>
 
-    <!-- BOTTOM NAVIGATION -->
-    <ion-footer class="bottom-navbar">
-      <ion-toolbar color="light">
-        <div class="nav-container">
+    <!-- Navbar de tabs al fondo para Cliente y Empleado -->
+    <ion-footer *ngIf="!mostrarSidebar()">
+      <ion-toolbar color="primary" class="navbar-tabs">
+        <div class="tabs-container">
           <div
-            class="nav-item"
+            class="tab-item"
             *ngFor="let item of menuItems"
             [class.active]="isActive(item.path)"
             (click)="navegar(item.path)"
           >
             <ion-icon [name]="item.icon"></ion-icon>
-            <span class="nav-label">{{ item.title }}</span>
+            <span>{{ item.title }}</span>
           </div>
         </div>
       </ion-toolbar>

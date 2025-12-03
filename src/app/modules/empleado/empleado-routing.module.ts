@@ -13,19 +13,20 @@ const routes: Routes = [
     loadChildren: () =>
       import("./pages/display/display.module").then((m) => m.DisplayPageModule),
   },
-  // Módulo 'agente' deprecated - ahora se usa 'super'
-  // {
-  //   path: 'historial',
-  //   loadChildren: () => import('./pages/historial/historial.module').then(m => m.HistorialPageModule)
-  // },
-  // {
-  //   path: 'reportes',
-  //   loadChildren: () => import('./pages/reportes/reportes.module').then(m => m.ReportesPageModule)
-  // }
+  {
+    path: "colas",
+    loadChildren: () =>
+      import("./pages/colas/colas.module").then((m) => m.ColasPageModule),
+  },
+  {
+    path: "escanear-qr",
+    loadChildren: () =>
+      import("./pages/escanear-qr/escanear-qr.module").then((m) => m.EscanearQrPageModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AgenteRoutingModule {}
+export class EmpleadoRoutingModule {}

@@ -27,15 +27,15 @@ export class RoleGuard  {
     console.log('🛡️ RoleGuard - Rol ID:', roleId);
 
     // Verificar si el rol coincide (por nombre o ID)
-    // role_id 1 = Administrador, 2 = Agente, 3 = Cliente
+    // role_id 1 = Administrador (NO usa PWA), 2 = Agente, 3 = Cliente, 4 = Empleado
     let roleMatches = false;
     
-    if (expectedRole === 'Administrador') {
-      roleMatches = userRole === 'Administrador' || roleId === 1;
-    } else if (expectedRole === 'Agente') {
+    if (expectedRole === 'Agente') {
       roleMatches = userRole === 'Agente' || roleId === 2;
     } else if (expectedRole === 'Cliente') {
       roleMatches = userRole === 'Cliente' || roleId === 3;
+    } else if (expectedRole === 'Empleado') {
+      roleMatches = userRole === 'Empleado' || roleId === 4;
     } else {
       roleMatches = userRole === expectedRole;
     }
@@ -51,16 +51,16 @@ export class RoleGuard  {
     // Si el rol NO coincide, redirigir a su dashboard correcto
     console.log('🛡️ RoleGuard - ❌ Acceso denegado, redirigiendo a dashboard correcto');
     
-    // role_id 1 = Administrador (Jefe máximo - Gestión), 2 = Agente (Admin de Sucursal - Operaciones), 3 = Cliente
-    if (userRole === 'Administrador' || roleId === 1) {
-      console.log('🛡️ Redirigiendo a Administrador (Gestión de Sucursales)');
-      this.router.navigate(['/admin/negocios']);
-    } else if (userRole === 'Agente' || roleId === 2) {
+    // role_id 2 = Agente (Admin de Sucursal), 3 = Cliente, 4 = Empleado (Atiende turnos)
+    if (userRole === 'Agente' || roleId === 2) {
       console.log('🛡️ Redirigiendo a Agente (Mi Sucursal)');
       this.router.navigate(['/super/dashboard']);
     } else if (userRole === 'Cliente' || roleId === 3) {
       console.log('🛡️ Redirigiendo a Cliente home');
       this.router.navigate(['/cliente/home']);
+    } else if (userRole === 'Empleado' || roleId === 4) {
+      console.log('🛡️ Redirigiendo a Empleado (Turnos)');
+      this.router.navigate(['/empleado/turnos']);
     } else {
       console.log('🛡️ Rol desconocido, redirigiendo a login');
       this.router.navigate(['/auth/login']);
