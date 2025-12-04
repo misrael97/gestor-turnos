@@ -1,8 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { SplashScreen } from "@capacitor/splash-screen";
-import { SwUpdate } from "@angular/service-worker";
+import { SwUpdate, VersionReadyEvent } from "@angular/service-worker";
+import { AlertController, ToastController } from "@ionic/angular";
 import { AuthService } from "./core/services/auth.service";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -10,16 +12,21 @@ import { AuthService } from "./core/services/auth.service";
   styleUrls: ["app.component.scss"],
 })
 export class AppComponent implements OnInit {
+  isOnline: boolean = true;
+
   constructor(
     private auth: AuthService,
     private router: Router,
-    private swUpdate: SwUpdate
+    private swUpdate: SwUpdate,
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {
     this.initializeApp();
   }
 
   ngOnInit() {
     this.checkForUpdates();
+    this.monitorOnlineStatus();
   }
 
   initializeApp() {
@@ -63,29 +70,97 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private checkForUpdates() {
+  private async checkForUpdates() {
     if (this.swUpdate.isEnabled) {
-      console.log(
-        "🔄 PWA - Service Worker activo, verificando actualizaciones..."
-      );
+      console.log("🔄 PWA - Service Worker activo, verificando actualizaciones...");
 
-      this.swUpdate.versionUpdates.subscribe((event) => {
-        if (event.type === "VERSION_READY") {
-          console.log("✅ PWA - Nueva versión disponible");
-          if (confirm("Nueva versión disponible. ¿Recargar ahora?")) {
-            window.location.reload();
-          }
-        }
-      });
+      // Detectar cuando hay una nueva versión disponible
+      this.swUpdate.versionUpdates
+        .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
+        .subscribe(async (event) => {
+          console.log("✅ PWA - Nueva versión disponible", event);
+          await this.promptUserToUpdate();
+        });
 
-      // Verificar cada 30 segundos
+      // Verificar actualizaciones cada 6 horas
       setInterval(() => {
         this.swUpdate.checkForUpdate().then(() => {
           console.log("🔍 PWA - Verificación de actualizaciones completada");
+        }).catch(err => {
+          console.error("❌ Error verificando actualizaciones:", err);
         });
-      }, 30000);
+      }, 6 * 60 * 60 * 1000);
+
+      // Verificación inicial
+      this.swUpdate.checkForUpdate();
     } else {
       console.log("ℹ️ PWA - Service Worker deshabilitado (modo desarrollo)");
     }
+  }
+
+  private async promptUserToUpdate() {
+    const alert = await this.alertController.create({
+      header: '🔄 Actualización Disponible',
+      message: 'Hay una nueva versión de la aplicación. ¿Deseas actualizar ahora?',
+      buttons: [
+        {
+          text: 'Más tarde',
+          role: 'cancel'
+        },
+        {
+          text: 'Actualizar',
+          handler: () => {
+            window.location.reload();
+          }
+        }
+      ],
+      backdropDismiss: false
+    });
+
+    await alert.present();
+  }
+
+  private monitorOnlineStatus() {
+    // Detectar cuando se pierde la conexión
+    window.addEventListener('offline', async () => {
+      this.isOnline = false;
+      console.log("📴 Sin conexión a Internet");
+      await this.showOfflineToast();
+    });
+
+    // Detectar cuando se recupera la conexión
+    window.addEventListener('online', async () => {
+      this.isOnline = true;
+      console.log("📶 Conexión restaurada");
+      await this.showOnlineToast();
+    });
+
+    // Estado inicial
+    this.isOnline = navigator.onLine;
+    if (!this.isOnline) {
+      this.showOfflineToast();
+    }
+  }
+
+  private async showOfflineToast() {
+    const toast = await this.toastController.create({
+      message: '📴 Sin conexión. Trabajando en modo offline',
+      duration: 3000,
+      color: 'warning',
+      position: 'bottom',
+      icon: 'cloud-offline-outline'
+    });
+    await toast.present();
+  }
+
+  private async showOnlineToast() {
+    const toast = await this.toastController.create({
+      message: '📶 Conexión restaurada',
+      duration: 2000,
+      color: 'success',
+      position: 'bottom',
+      icon: 'cloud-done-outline'
+    });
+    await toast.present();
   }
 }
