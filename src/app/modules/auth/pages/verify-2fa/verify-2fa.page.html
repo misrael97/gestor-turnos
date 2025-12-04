@@ -1,79 +1,56 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Verificación de Dos Factores</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
   <div class="verification-container">
-    <!-- Icono de seguridad -->
-    <div class="ion-text-center ion-margin-bottom">
-      <ion-icon name="shield-checkmark" color="primary" size="large"></ion-icon>
-    </div>
+    <div class="auth-card">
+      <!-- Icono de seguridad circular -->
+      <div class="icon-circle">
+        <ion-icon name="lock-closed"></ion-icon>
+      </div>
 
-    <h2 class="ion-text-center">Verifica tu identidad</h2>
-    <p class="ion-text-center ion-margin-bottom">
-      Hemos enviado un código de 6 dígitos a:<br>
-      <strong>{{ email }}</strong>
-    </p>
-
-    <!-- Formulario de código -->
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <ion-item>
-        <ion-label position="stacked">Código de Verificación</ion-label>
-        <ion-input 
-          type="text" 
-          formControlName="code" 
-          placeholder="000000"
-          maxlength="6"
-          inputmode="numeric"
-          pattern="[0-9]*"
-          class="code-input">
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger" *ngIf="form.get('code')?.touched && form.get('code')?.invalid">
-        <p class="ion-padding-start"><small>El código debe tener 6 dígitos</small></p>
-      </ion-text>
-
-      <ion-button 
-        expand="block" 
-        type="submit" 
-        [disabled]="loading || form.invalid"
-        class="ion-margin-top">
-        <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-        <span *ngIf="!loading">Verificar</span>
-      </ion-button>
-    </form>
-
-    <!-- Reenviar código -->
-    <div class="ion-text-center ion-margin-top">
-      <p>
-        ¿No recibiste el código?
-        <ion-button 
-          fill="clear" 
-          size="small" 
-          (click)="resendCode()" 
-          [disabled]="countdown > 0 || resendLoading">
-          <ion-spinner *ngIf="resendLoading" name="crescent" slot="start"></ion-spinner>
-          <span *ngIf="countdown > 0">Reenviar en {{ countdown }}s</span>
-          <span *ngIf="countdown === 0 && !resendLoading">Reenviar código</span>
-        </ion-button>
+      <h2 class="ion-text-center">Verificación de Seguridad</h2>
+      <p class="ion-text-center text-secondary ion-margin-bottom">
+        Hemos enviado un código de 6 dígitos a tu email
       </p>
-    </div>
 
-    <!-- Información de seguridad -->
-    <ion-card class="ion-margin-top">
-      <ion-card-content>
+      <!-- Formulario de código -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label class="form-label">Código de Verificación</label>
+          <ion-item lines="none">
+            <ion-input type="text" formControlName="code" placeholder="000000" maxlength="6" inputmode="numeric"
+              pattern="[0-9]*" class="code-input">
+            </ion-input>
+          </ion-item>
+          <p class="ion-text-center text-secondary" style="font-size: 0.85rem; margin-top: 0.5rem;">
+            Ingresa el código de 6 dígitos
+          </p>
+        </div>
+
+        <ion-button expand="block" type="submit" color="primary" [disabled]="loading || form.invalid"
+          class="ion-margin-top">
+          <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+          <span *ngIf="!loading">Verificar Código</span>
+        </ion-button>
+      </form>
+
+      <!-- Reenviar código -->
+      <div class="ion-text-center ion-margin-top">
+        <p class="text-secondary" style="margin-bottom: 0.5rem;">
+          ¿No recibiste el código?
+        </p>
+        <ion-button fill="clear" size="small" (click)="resendCode()" [disabled]="countdown > 0 || resendLoading">
+          <ion-spinner *ngIf="resendLoading" name="crescent" slot="start"></ion-spinner>
+          <span *ngIf="countdown > 0" class="resend-text">Reenviar en {{ countdown }}s</span>
+          <span *ngIf="countdown === 0 && !resendLoading" class="resend-text">Reenviar código</span>
+        </ion-button>
+      </div>
+
+      <!-- Información de seguridad -->
+      <div class="security-info ion-margin-top">
         <ion-icon name="information-circle-outline" color="primary"></ion-icon>
-        <small>
-          <strong>Seguridad:</strong> Este código expira en 10 minutos. 
-          No lo compartas con nadie.
+        <small class="text-secondary">
+          <strong>Seguridad:</strong> Este código expira en 10 minutos. No lo compartas con nadie.
         </small>
-      </ion-card-content>
-    </ion-card>
+      </div>
+    </div>
   </div>
 </ion-content>
