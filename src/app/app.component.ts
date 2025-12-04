@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   private redirectIfAuthenticated() {
+    // ✅ Esperar a que el token se verifique antes de redirigir
     if (this.auth.isAuthenticated && this.auth.user) {
       const user = this.auth.user;
       const roleName = user.role?.nombre || user.role?.name;
@@ -45,19 +46,26 @@ export class AppComponent implements OnInit {
 
       // No redirigir si ya está en una ruta válida de su módulo
       const currentUrl = this.router.url;
-
-      if (roleId === 1 && !currentUrl.startsWith("/admin")) {
-        // Administrador
-        console.log("🔄 Redirigiendo a módulo Admin");
-        this.router.navigate(["/admin/dashboard"]);
-      } else if (roleId === 2 && !currentUrl.startsWith("/super")) {
-        // Agente
-        console.log("🔄 Redirigiendo a módulo Agente");
-        this.router.navigate(["/super/display"]);
-      } else if (roleId === 3 && !currentUrl.startsWith("/cliente")) {
-        // Cliente
-        console.log("🔄 Redirigiendo a módulo Cliente");
-        this.router.navigate(["/cliente/home"]);
+      
+      // ✅ NO redirigir si ya está en auth/login (evita loop)
+      if (currentUrl === '/' || currentUrl.startsWith('/auth')) {
+        // Solo redirigir si está en login
+        if (roleId === 1) {
+          console.log("🔄 Redirigiendo a módulo Admin");
+          this.router.navigate(["/admin/dashboard"]);
+        } else if (roleId === 2) {
+          // Agente
+          console.log("🔄 Redirigiendo a módulo Agente");
+          this.router.navigate(["/super/display"]);
+        } else if (roleId === 3) {
+          // Cliente
+          console.log("🔄 Redirigiendo a módulo Cliente");
+          this.router.navigate(["/cliente/home"]);
+        } else if (roleId === 4) {
+          // Empleado
+          console.log("🔄 Redirigiendo a módulo Empleado");
+          this.router.navigate(["/empleado/turnos"]);
+        }
       }
     }
   }
