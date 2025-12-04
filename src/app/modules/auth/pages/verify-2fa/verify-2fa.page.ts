@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -20,6 +21,7 @@ export class Verify2faPage implements OnInit {
   constructor(
     private fb: UntypedFormBuilder,
     private auth: AuthService,
+    private notificationService: NotificationService,
     private toastCtrl: ToastController,
     private router: Router
   ) {
@@ -78,6 +80,17 @@ export class Verify2faPage implements OnInit {
         
         // Guardar sesión con el token
         this.auth.saveSession(res.token, res.user);
+
+        // 🔔 Solicitar permiso y enviar token FCM al servidor
+        try {
+          const fcmToken = await this.notificationService.requestPermission();
+          if (fcmToken && res.user.id) {
+            await this.notificationService.sendTokenToServer(res.user.id);
+          }
+        } catch (error) {
+          console.error('Error configurando notificaciones:', error);
+        }
+
         await this.presentToast('Autenticación exitosa', 'success');
         
         // Redirigir según el rol
