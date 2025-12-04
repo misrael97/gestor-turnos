@@ -23,9 +23,7 @@ export class AuthService {
     private http: HttpClient, 
     private router: Router
   ) {
-    console.log('🔧 AuthService iniciado');
-    console.log('🌐 API URL configurada:', this.api);
-    console.log('📦 Environment completo:', environment);
+    // AuthService iniciado
   }
 
   // ---------------------------
@@ -81,14 +79,7 @@ export class AuthService {
    */
   login(data: any): Observable<any> {
     const url = `${this.api}/login`;
-    console.log('🌐 AuthService - URL completa de login:', url);
-    console.log('📤 AuthService - Datos de login:', data);
-    return this.http.post<any>(url, data).pipe(
-      tap({
-        next: response => console.log('✅ AuthService - Respuesta exitosa recibida:', response),
-        error: error => console.error('❌ AuthService - Error en petición:', error)
-      })
-    );
+    return this.http.post<any>(url, data);
   }
 
   /**
@@ -96,7 +87,6 @@ export class AuthService {
    */
   verify2FA(email: string, code: string): Observable<any> {
     const payload = { email, code };
-    console.log('📤 Enviando verificación 2FA:', payload);
     return this.http.post<any>(`${this.api}/login/verify-2fa`, payload);
   }
 
@@ -104,7 +94,6 @@ export class AuthService {
    * Reenvía el código 2FA
    */
   resend2FA(email: string): Observable<any> {
-    console.log('📤 Reenviando código 2FA para:', email);
     return this.http.post<any>(`${this.api}/login/resend-2fa`, { email });
   }
 
@@ -114,16 +103,6 @@ export class AuthService {
   }
   get headers(): HttpHeaders {
     const currentToken = this.token;
-    console.log('🔑 AuthService.headers - Token actual:', currentToken ? `${currentToken.substring(0, 20)}...` : 'null');
-    
-    if (!currentToken) {
-      console.warn('⚠️ AuthService.headers - No hay token disponible, la petición será rechazada');
-      console.warn('⚠️ Estado del localStorage:', {
-        token: localStorage.getItem(this.tokenKey),
-        user: localStorage.getItem(this.userKey)
-      });
-    }
-    
     return new HttpHeaders({
       'Authorization': `Bearer ${currentToken}`,
       'Accept': 'application/json'
@@ -154,26 +133,12 @@ export class AuthService {
    * Guarda el token y el usuario en localStorage Y actualiza los BehaviorSubjects.
    */
   saveSession(token: string, user: any) {
-    console.log('💾 saveSession - Guardando sesión...');
-    console.log('💾 Token recibido:', token ? `${token.substring(0, 20)}...` : 'null');
-    console.log('💾 Usuario recibido:', user);
-    
     localStorage.setItem(this.tokenKey, token);
     localStorage.setItem(this.userKey, JSON.stringify(user));
     
     // Esto notificará a todos los "oyentes" que la sesión cambió
     this.token$.next(token);
     this.user$.next(user);
-    
-    console.log('✅ saveSession - Sesión guardada correctamente');
-    console.log('✅ Verificación localStorage:', {
-      token: localStorage.getItem(this.tokenKey)?.substring(0, 20) + '...',
-      user: localStorage.getItem(this.userKey)
-    });
-    console.log('✅ Verificación BehaviorSubjects:', {
-      token: this.token$.value?.substring(0, 20) + '...',
-      user: this.user$.value
-    });
   }
 
 

@@ -29,28 +29,16 @@ export class LoginPage {
     if (this.form.invalid) return;
     this.loading = true;
 
-    console.log('🔍 INICIANDO LOGIN - Datos:', this.form.value);
-    console.log('🌐 API URL desde AuthService:', (this.auth as any).api);
-
     this.auth.login(this.form.value).subscribe({
       next: async (res: any) => {
-        console.log('✅ LOGIN EXITOSO - Respuesta completa:', res);
-        console.log('📧 Email usado:', this.form.value.email);
         this.loading = false;
         
         // Verificar si el backend requiere 2FA
         if (res.requires_2fa || res.message?.includes('2FA') || res.message?.includes('código')) {
           
-          // MODO DEBUG: Si el backend devuelve el código (solo desarrollo)
-          if (res.debug_code) {
-            console.warn('🔐 CÓDIGO 2FA (DEBUG):', res.debug_code);
-            console.warn('⚠️ Este código solo se muestra en desarrollo');
-          }
-          
           // Guardar email temporalmente en localStorage como backup
           const userEmail = this.form.value.email;
           localStorage.setItem('temp_2fa_email', userEmail);
-          console.log('💾 Email guardado en localStorage para 2FA:', userEmail);
           
           await this.presentToast('Código de verificación enviado a tu correo', 'success');
           
@@ -63,35 +51,23 @@ export class LoginPage {
           this.auth.saveSession(res.token, res.user);
           await this.presentToast('Bienvenido ' + res.user.name, 'success');
           
-          const roleName = res.user.role?.nombre || res.user.role?.name;
           const roleId = res.user.role?.id || res.user.role_id;
-          console.log('👤 Usuario completo:', res.user);
-          console.log('🎭 Rol completo:', res.user.role);
-          console.log('🎭 Rol nombre:', roleName);
-          console.log('🎭 Rol ID:', roleId);
           
-          // Redirigir según el rol (por nombre o por ID)
-          // role_id 1 = Administrador (Jefe máximo - Gestión), 2 = Agente (Admin de Sucursal - Operaciones), 3 = Cliente
-          if (roleName === 'Administrador' || roleId === 1) {
-            console.log('➡️ Redirigiendo a Administrador (Gestión de Sucursales)');
+          // Redirigir según el rol
+          if (roleId === 1) {
             this.router.navigate(['/admin/negocios']);
-          } else if (roleName === 'Agente' || roleId === 2) {
-            console.log('➡️ Redirigiendo a Agente (Mi Sucursal)');
+          } else if (roleId === 2) {
             this.router.navigate(['/super/dashboard']);
-          } else if (roleName === 'Cliente' || roleId === 3) {
-            console.log('➡️ Redirigiendo a Cliente home');
+          } else if (roleId === 3) {
             this.router.navigate(['/cliente/home']);
+          } else if (roleId === 4) {
+            this.router.navigate(['/empleado/turnos']);
           } else {
-            console.log('⚠️ Rol desconocido, redirigiendo a cliente por defecto');
             this.router.navigate(['/cliente/home']);
           }
         }
       },
       error: async (err) => {
-        console.error('❌ ERROR EN LOGIN - Error completo:', err);
-        console.error('❌ Status:', err.status);
-        console.error('❌ Error body:', err.error);
-        console.error('❌ URL intentada:', err.url);
         this.loading = false;
         
         let mensaje = 'Credenciales incorrectas';

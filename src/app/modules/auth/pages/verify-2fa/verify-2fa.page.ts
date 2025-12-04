@@ -33,22 +33,15 @@ export class Verify2faPage implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras?.state || history.state;
     
-    console.log('🔍 Verify2FA - Estado de navegación:', state);
-    console.log('🔍 Verify2FA - Navigation completo:', navigation);
-    
     this.email = state?.email || '';
     
     // Si no hay email en el estado, intentar obtenerlo de localStorage como backup
     if (!this.email) {
       this.email = localStorage.getItem('temp_2fa_email') || '';
-      console.log('📦 Email obtenido de localStorage:', this.email);
     }
-    
-    console.log('📧 Email final para 2FA:', this.email);
     
     if (!this.email) {
       // Si no hay email, redirigir al login
-      console.error('❌ No hay email disponible, redirigiendo a login');
       this.router.navigate(['/auth/login']);
       return;
     }
@@ -75,45 +68,30 @@ export class Verify2faPage implements OnInit {
 
     this.loading = true;
     const code = this.form.value.code;
-    console.log('🔐 Verificando código 2FA');
-    console.log('Email:', this.email);
-    console.log('Código ingresado:', code);
-    console.log('Longitud del código:', code.length);
 
     this.auth.verify2FA(this.email, code).subscribe({
       next: async (res: any) => {
-        console.log('✅ 2FA verificado exitosamente:', res);
         this.loading = false;
         
         // Limpiar email temporal de localStorage
         localStorage.removeItem('temp_2fa_email');
-        console.log('🗑️ Email temporal eliminado de localStorage');
         
         // Guardar sesión con el token
         this.auth.saveSession(res.token, res.user);
         await this.presentToast('Autenticación exitosa', 'success');
         
         // Redirigir según el rol
-        const roleName = res.user.role?.nombre || res.user.role?.name;
         const roleId = res.user.role?.id || res.user.role_id;
-        console.log('👤 Usuario completo:', res.user);
-        console.log('🎭 Rol completo:', res.user.role);
-        console.log('🎭 Rol nombre:', roleName);
-        console.log('🎭 Rol ID:', roleId);
         
-        // Redirigir según el rol (por nombre o por ID)
-        // role_id 1 = Administrador (Jefe máximo - Gestión), 2 = Agente (Admin de Sucursal - Operaciones), 3 = Cliente
-        if (roleName === 'Administrador' || roleId === 1) {
-          console.log('➡️ Redirigiendo a Administrador (Gestión de Sucursales)');
+        if (roleId === 1) {
           this.router.navigate(['/admin/negocios']);
-        } else if (roleName === 'Agente' || roleId === 2) {
-          console.log('➡️ Redirigiendo a Agente (Mi Sucursal)');
+        } else if (roleId === 2) {
           this.router.navigate(['/super/dashboard']);
-        } else if (roleName === 'Cliente' || roleId === 3) {
-          console.log('➡️ Redirigiendo a Cliente home');
+        } else if (roleId === 3) {
           this.router.navigate(['/cliente/home']);
+        } else if (roleId === 4) {
+          this.router.navigate(['/empleado/turnos']);
         } else {
-          console.log('⚠️ Rol desconocido, redirigiendo a cliente por defecto');
           this.router.navigate(['/cliente/home']);
         }
       },
@@ -171,17 +149,14 @@ export class Verify2faPage implements OnInit {
     }
 
     this.resendLoading = true;
-    console.log('Reenviando código 2FA a:', this.email);
 
     this.auth.resend2FA(this.email).subscribe({
       next: async (res: any) => {
-        console.log('Código reenviado:', res);
         this.resendLoading = false;
         await this.presentToast('Código reenviado a tu correo', 'success');
         this.startCountdown();
       },
       error: async (err) => {
-        console.error('Error al reenviar código:', err);
         this.resendLoading = false;
         await this.presentToast('Error al reenviar el código', 'danger');
       }

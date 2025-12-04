@@ -39,31 +39,24 @@ export class AppComponent implements OnInit {
     // ✅ Esperar a que el token se verifique antes de redirigir
     if (this.auth.isAuthenticated && this.auth.user) {
       const user = this.auth.user;
-      const roleName = user.role?.nombre || user.role?.name;
       const roleId = user.role?.id || user.role_id;
 
-      console.log("👤 Usuario autenticado detectado:", { roleName, roleId });
-
-      // No redirigir si ya está en una ruta válida de su módulo
       const currentUrl = this.router.url;
       
-      // ✅ NO redirigir si ya está en auth/login (evita loop)
+      // ✅ NO redirigir si está en rutas públicas
+      if (currentUrl.startsWith('/display-publico') || currentUrl.startsWith('/verificar-turno')) {
+        return; // Permitir acceso a rutas públicas
+      }
+      
+      // ✅ Solo redirigir si está en login o raíz
       if (currentUrl === '/' || currentUrl.startsWith('/auth')) {
-        // Solo redirigir si está en login
         if (roleId === 1) {
-          console.log("🔄 Redirigiendo a módulo Admin");
           this.router.navigate(["/admin/dashboard"]);
         } else if (roleId === 2) {
-          // Agente
-          console.log("🔄 Redirigiendo a módulo Agente");
           this.router.navigate(["/super/display"]);
         } else if (roleId === 3) {
-          // Cliente
-          console.log("🔄 Redirigiendo a módulo Cliente");
           this.router.navigate(["/cliente/home"]);
         } else if (roleId === 4) {
-          // Empleado
-          console.log("🔄 Redirigiendo a módulo Empleado");
           this.router.navigate(["/empleado/turnos"]);
         }
       }
