@@ -23,6 +23,21 @@ ion-label {
   font-weight: 500;
 }
 
+// Círculo de iniciales del usuario
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background: #4169E1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
 // NAVBAR HORIZONTAL AL FONDO (Cliente y Empleado)
 .navbar-tabs {
   --background: #1976d2;
@@ -36,10 +51,11 @@ ion-label {
     align-items: center;
     width: 100%;
     overflow-x: auto;
-    
+
     // Ocultar scrollbar pero mantener funcionalidad
     scrollbar-width: none; // Firefox
     -ms-overflow-style: none; // IE/Edge
+
     &::-webkit-scrollbar {
       display: none; // Chrome/Safari
     }
@@ -56,7 +72,7 @@ ion-label {
     flex: 1;
     min-width: 70px;
     border-top: 3px solid transparent;
-    
+
     ion-icon {
       font-size: 24px;
       color: rgba(255, 255, 255, 0.7);
@@ -75,7 +91,7 @@ ion-label {
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.1);
-      
+
       ion-icon {
         color: #fff;
         transform: scale(1.1);
@@ -89,7 +105,7 @@ ion-label {
     &.active {
       border-top-color: #fff;
       background-color: rgba(255, 255, 255, 0.15);
-      
+
       ion-icon {
         color: #fff;
         transform: scale(1.15);
@@ -106,7 +122,7 @@ ion-label {
 // BOTTOM NAVBAR STYLES (móvil)
 .bottom-navbar {
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  
+
   ion-toolbar {
     --background: #ffffff;
     --padding-start: 0;
@@ -132,7 +148,7 @@ ion-label {
     transition: all 0.3s ease;
     flex: 1;
     min-width: 60px;
-    
+
     ion-icon {
       font-size: 24px;
       color: #666;
@@ -150,7 +166,7 @@ ion-label {
 
     &:hover {
       background-color: rgba(25, 118, 210, 0.05);
-      
+
       ion-icon {
         color: #1976d2;
         transform: scale(1.1);
@@ -180,11 +196,11 @@ ion-label {
   .navbar-tabs .tab-item {
     padding: 10px 20px;
     min-width: 90px;
-    
+
     ion-icon {
       font-size: 24px;
     }
-    
+
     span {
       font-size: 13px;
     }

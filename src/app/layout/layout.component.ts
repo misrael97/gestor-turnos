@@ -27,7 +27,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private router: Router,
     private menuCtrl: MenuController
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Suscribirse a los cambios del usuario
@@ -147,7 +147,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   mostrarSidebar(): boolean {
     const roleId = this.user?.role?.id || this.user?.role_id;
     const roleName = this.user?.role?.nombre || this.user?.role?.name;
-    
+
     // Solo el Agente (role_id 2) usa sidebar
     return roleName === "Agente" || roleId === 2;
   }
@@ -164,5 +164,23 @@ export class LayoutComponent implements OnInit, OnDestroy {
   navegar(path: string) {
     this.menuCtrl.close();
     this.router.navigate([path]);
+  }
+
+  /**
+   * Obtiene las iniciales del usuario autenticado
+   */
+  getUserInitials(): string {
+    if (!this.user || !this.user.name) {
+      return 'US'; // Usuario por defecto
+    }
+
+    const names = this.user.name.trim().split(' ');
+    if (names.length === 1) {
+      // Si solo hay un nombre, tomar las dos primeras letras
+      return names[0].substring(0, 2).toUpperCase();
+    } else {
+      // Si hay dos o más nombres, tomar la primera letra de cada uno
+      return (names[0][0] + names[1][0]).toUpperCase();
+    }
   }
 }
