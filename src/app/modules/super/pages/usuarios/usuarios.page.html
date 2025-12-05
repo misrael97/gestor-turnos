@@ -12,7 +12,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="ion-padding">
+  <ion-grid class="ion-padding">
     <!-- Formulario -->
     <ion-card>
       <ion-card-header>
@@ -39,7 +39,7 @@
             </ion-select>
           </ion-item>
 
-          <div class="ion-margin-top">
+          <ion-grid class="ion-margin-top">
             <ion-button expand="block" type="submit" color="success">
               <ion-icon slot="start" :name="editando ? 'checkmark' : 'person-add'"></ion-icon>
               {{ editando ? 'Actualizar' : 'Crear' }} Usuario
@@ -48,7 +48,7 @@
               <ion-icon slot="start" name="close"></ion-icon>
               Cancelar
             </ion-button>
-          </div>
+          </ion-grid>
         </form>
       </ion-card-content>
     </ion-card>
@@ -67,13 +67,13 @@
               <ion-icon name="person-circle" style="font-size: 48px;"></ion-icon>
             </ion-avatar>
             <ion-label>
-              <h2><strong>{{ u.name }}</strong></h2>
-              <p><ion-icon name="mail"></ion-icon> {{ u.email }}</p>
-              <p>
+              <ion-text><ion-label><strong>{{ u.name }}</strong></ion-label></ion-text>
+              <ion-text><ion-label><ion-icon name="mail"></ion-icon> {{ u.email }}</ion-label></ion-text>
+              <ion-text>
                 <ion-badge [color]="u.role_id === 1 ? 'danger' : u.role_id === 2 ? 'warning' : 'medium'">
                   {{ u.role?.name || 'Rol ID: ' + u.role_id }}
                 </ion-badge>
-              </p>
+              </ion-text>
             </ion-label>
             <ion-buttons slot="end">
               <ion-button color="primary" (click)="editarUsuario(u)">
@@ -89,11 +89,11 @@
         <ion-card *ngIf="!loading && usuarios.length === 0">
           <ion-card-content class="ion-text-center">
             <ion-icon name="people-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
-            <p>No hay usuarios registrados</p>
-            <p class="ion-text-muted">Crea el primer usuario usando el formulario de arriba</p>
+            <ion-text><ion-label>No hay usuarios registrados</ion-label></ion-text>
+            <ion-text class="ion-text-muted"><ion-label>Crea el primer usuario usando el formulario de arriba</ion-label></ion-text>
           </ion-card-content>
         </ion-card>
       </ion-card-content>
     </ion-card>
-  </div>
+  </ion-grid>
 </ion-content>

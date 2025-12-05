@@ -12,15 +12,15 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="ion-padding">
+  <ion-grid class="ion-padding">
     <!-- Spinner de carga -->
-    <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-grid *ngIf="loading" class="ion-text-center ion-padding">
       <ion-spinner name="crescent"></ion-spinner>
-      <p>Cargando reportes...</p>
-    </div>
+      <ion-text><ion-label>Cargando reportes...</ion-label></ion-text>
+    </ion-grid>
 
     <!-- Contenido principal -->
-    <div *ngIf="!loading">
+    <ion-grid *ngIf="!loading">
       <!-- Cards de estadísticas principales -->
       <ion-grid>
         <ion-row>
@@ -28,8 +28,8 @@
             <ion-card color="primary">
               <ion-card-content class="ion-text-center">
                 <ion-icon name="business-outline" style="font-size: 48px;"></ion-icon>
-                <h1 class="ion-no-margin">{{ reportes.negociosActivos || reportes.total_sucursales || 0 }}</h1>
-                <p class="ion-no-margin">Negocios/Sucursales</p>
+                <ion-text class="ion-no-margin"><ion-label>{{ reportes.negociosActivos || reportes.total_sucursales || 0 }}</ion-label></ion-text>
+                <ion-text class="ion-no-margin"><ion-label>Negocios/Sucursales</ion-label></ion-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -37,8 +37,8 @@
             <ion-card color="success">
               <ion-card-content class="ion-text-center">
                 <ion-icon name="people-outline" style="font-size: 48px;"></ion-icon>
-                <h1 class="ion-no-margin">{{ reportes.usuariosActivos || reportes.total_usuarios || 0 }}</h1>
-                <p class="ion-no-margin">Usuarios Activos</p>
+                <ion-text class="ion-no-margin"><ion-label>{{ reportes.usuariosActivos || reportes.total_usuarios || 0 }}</ion-label></ion-text>
+                <ion-text class="ion-no-margin"><ion-label>Usuarios Activos</ion-label></ion-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -49,8 +49,8 @@
             <ion-card color="tertiary">
               <ion-card-content class="ion-text-center">
                 <ion-icon name="calendar-outline" style="font-size: 48px;"></ion-icon>
-                <h1 class="ion-no-margin">{{ reportes.turnosHoy || 0 }}</h1>
-                <p class="ion-no-margin">Turnos Hoy</p>
+                <ion-text class="ion-no-margin"><ion-label>{{ reportes.turnosHoy || 0 }}</ion-label></ion-text>
+                <ion-text class="ion-no-margin"><ion-label>Turnos Hoy</ion-label></ion-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -58,8 +58,8 @@
             <ion-card color="warning">
               <ion-card-content class="ion-text-center">
                 <ion-icon name="checkmark-done-outline" style="font-size: 48px;"></ion-icon>
-                <h1 class="ion-no-margin">{{ reportes.totalTurnos || reportes.total_turnos || 0 }}</h1>
-                <p class="ion-no-margin">Turnos Totales</p>
+                <ion-text class="ion-no-margin"><ion-label>{{ reportes.totalTurnos || reportes.total_turnos || 0 }}</ion-label></ion-text>
+                <ion-text class="ion-no-margin"><ion-label>Turnos Totales</ion-label></ion-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -70,8 +70,8 @@
             <ion-card color="medium">
               <ion-card-content class="ion-text-center">
                 <ion-icon name="hourglass-outline" style="font-size: 48px;"></ion-icon>
-                <h1 class="ion-no-margin">{{ reportes.turnosPendientes || 0 }}</h1>
-                <p class="ion-no-margin">Pendientes</p>
+                <ion-text class="ion-no-margin"><ion-label>{{ reportes.turnosPendientes || 0 }}</ion-label></ion-text>
+                <ion-text class="ion-no-margin"><ion-label>Pendientes</ion-label></ion-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -79,8 +79,8 @@
             <ion-card color="success">
               <ion-card-content class="ion-text-center">
                 <ion-icon name="checkmark-circle-outline" style="font-size: 48px;"></ion-icon>
-                <h1 class="ion-no-margin">{{ reportes.turnosAtendidos || 0 }}</h1>
-                <p class="ion-no-margin">Atendidos</p>
+                <ion-text class="ion-no-margin"><ion-label>{{ reportes.turnosAtendidos || 0 }}</ion-label></ion-text>
+                <ion-text class="ion-no-margin"><ion-label>Atendidos</ion-label></ion-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -97,22 +97,22 @@
             <ion-item>
               <ion-icon name="timer-outline" slot="start" color="primary"></ion-icon>
               <ion-label>
-                <h3>Tiempo Promedio de Espera</h3>
-                <p>{{ reportes.promedio_espera || 0 }} minutos</p>
+                <ion-text><ion-label>Tiempo Promedio de Espera</ion-label></ion-text>
+                <ion-text><ion-label>{{ reportes.promedio_espera || 0 }} minutos</ion-label></ion-text>
               </ion-label>
             </ion-item>
             <ion-item>
               <ion-icon name="trending-up-outline" slot="start" color="success"></ion-icon>
               <ion-label>
-                <h3>Eficiencia del Sistema</h3>
-                <p>{{ reportes.eficiencia || 'N/A' }}</p>
+                <ion-text><ion-label>Eficiencia del Sistema</ion-label></ion-text>
+                <ion-text><ion-label>{{ reportes.eficiencia || 'N/A' }}</ion-label></ion-text>
               </ion-label>
             </ion-item>
             <ion-item>
               <ion-icon name="calendar-number-outline" slot="start" color="tertiary"></ion-icon>
               <ion-label>
-                <h3>Última Actualización</h3>
-                <p>{{ reportes.ultima_actualizacion || 'Ahora' }}</p>
+                <ion-text><ion-label>Última Actualización</ion-label></ion-text>
+                <ion-text><ion-label>{{ reportes.ultima_actualizacion || 'Ahora' }}</ion-label></ion-text>
               </ion-label>
             </ion-item>
           </ion-list>
@@ -131,8 +131,8 @@
                 {{ i + 1 }}
               </ion-badge>
               <ion-label>
-                <h2>{{ s.nombre }}</h2>
-                <p>{{ s.turnos_atendidos }} turnos atendidos</p>
+                <ion-text><ion-label>{{ s.nombre }}</ion-label></ion-text>
+                <ion-text><ion-label>{{ s.turnos_atendidos }} turnos atendidos</ion-label></ion-text>
               </ion-label>
               <ion-badge color="success">{{ s.productividad }}%</ion-badge>
             </ion-item>
@@ -144,11 +144,11 @@
       <ion-card *ngIf="error" color="warning">
         <ion-card-content class="ion-text-center">
           <ion-icon name="alert-circle-outline" style="font-size: 64px;"></ion-icon>
-          <h2>Endpoint no disponible</h2>
-          <p>El endpoint /api/reportes-globales no está implementado en el backend.</p>
-          <p class="ion-text-muted">Los datos mostrados son valores de ejemplo para desarrollo.</p>
+          <ion-text><ion-label>Endpoint no disponible</ion-label></ion-text>
+          <ion-text><ion-label>El endpoint /api/reportes-globales no está implementado en el backend.</ion-label></ion-text>
+          <ion-text class="ion-text-muted"><ion-label>Los datos mostrados son valores de ejemplo para desarrollo.</ion-label></ion-text>
         </ion-card-content>
       </ion-card>
-    </div>
-  </div>
+    </ion-grid>
+  </ion-grid>
 </ion-content>

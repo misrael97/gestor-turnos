@@ -3,19 +3,19 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="ion-padding">
+  <ion-grid class="ion-padding">
     <!-- Turno Actual -->
     <ion-card *ngIf="turnoActual" color="success">
       <ion-card-header>
         <ion-card-title class="ion-text-center">
           <ion-icon name="megaphone" style="font-size: 48px;"></ion-icon>
-          <h1 style="font-size: 72px; margin: 10px 0;">{{ turnoActual.numero || turnoActual.id }}</h1>
-          <p>TURNO ACTUAL</p>
+          <ion-text style="font-size: 72px; margin: 10px 0;"><ion-label>{{ turnoActual.numero || turnoActual.id }}</ion-label></ion-text>
+          <ion-text><ion-label>TURNO ACTUAL</ion-label></ion-text>
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="ion-text-center">
-        <p><strong>Cliente:</strong> {{ turnoActual.user?.name || 'N/A' }}</p>
-        <p><strong>Hora llamado:</strong> {{ turnoActual.updated_at | date:'shortTime' }}</p>
+        <ion-text><ion-label><strong>Cliente:</strong> {{ turnoActual.user?.name || 'N/A' }}</ion-label></ion-text>
+        <ion-text><ion-label><strong>Hora llamado:</strong> {{ turnoActual.updated_at | date:'shortTime' }}</ion-label></ion-text>
       </ion-card-content>
     </ion-card>
 
@@ -25,16 +25,16 @@
         <ion-col size="6">
           <ion-card color="primary">
             <ion-card-content class="ion-text-center">
-              <h1 class="ion-no-margin">{{ turnosPendientes }}</h1>
-              <p class="ion-no-margin">En Espera</p>
+              <ion-text class="ion-no-margin"><ion-label>{{ turnosPendientes }}</ion-label></ion-text>
+              <ion-text class="ion-no-margin"><ion-label>En Espera</ion-label></ion-text>
             </ion-card-content>
           </ion-card>
         </ion-col>
         <ion-col size="6">
           <ion-card color="tertiary">
             <ion-card-content class="ion-text-center">
-              <h1 class="ion-no-margin">{{ totalTurnos }}</h1>
-              <p class="ion-no-margin">Total Hoy</p>
+              <ion-text class="ion-no-margin"><ion-label>{{ totalTurnos }}</ion-label></ion-text>
+              <ion-text class="ion-no-margin"><ion-label>Total Hoy</ion-label></ion-text>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -59,20 +59,20 @@
           <ion-item *ngFor="let turno of turnos; let i = index">
             <ion-badge slot="start" color="primary">{{ i + 1 }}</ion-badge>
             <ion-label>
-              <h2><strong>Turno #{{ turno.numero || turno.id }}</strong></h2>
-              <p>{{ turno.user?.name || 'Cliente' }}</p>
-              <p class="ion-text-muted">{{ turno.created_at | date:'short' }}</p>
+              <ion-text><ion-label><strong>Turno #{{ turno.numero || turno.id }}</strong></ion-label></ion-text>
+              <ion-text><ion-label>{{ turno.user?.name || 'Cliente' }}</ion-label></ion-text>
+              <ion-text class="ion-text-muted"><ion-label>{{ turno.created_at | date:'short' }}</ion-label></ion-text>
             </ion-label>
             <ion-badge slot="end" color="warning">{{ turno.estado }}</ion-badge>
           </ion-item>
         </ion-list>
 
-        <div *ngIf="!loading && turnos.length === 0" class="ion-text-center ion-padding">
+        <ion-grid *ngIf="!loading && turnos.length === 0" class="ion-text-center ion-padding">
           <ion-icon name="checkmark-done-circle" style="font-size: 64px; color: #ccc;"></ion-icon>
-          <p>No hay turnos en espera</p>
-          <p class="ion-text-muted">Los clientes pueden solicitar turnos desde la app</p>
-        </div>
+          <ion-text><ion-label>No hay turnos en espera</ion-label></ion-text>
+          <ion-text class="ion-text-muted"><ion-label>Los clientes pueden solicitar turnos desde la app</ion-label></ion-text>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
-  </div>
+  </ion-grid>
 </ion-content>

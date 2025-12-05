@@ -3,7 +3,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="ion-padding">
+  <ion-grid class="ion-padding">
     <!-- Skeleton Loader -->
     <app-skeleton-loader *ngIf="loading" type="card" [count]="2" [animated]="true"></app-skeleton-loader>
 
@@ -11,16 +11,18 @@
       <!-- Posición en la cola -->
       <ion-card color="primary" class="animated-card">
         <ion-card-content class="ion-text-center">
-          <h1 style="font-size: 72px; margin: 0;" class="animate-scale-in">{{ posicion }}</h1>
-          <p style="font-size: 18px; margin: 10px 0 0 0;">
-            <strong>Posición en la cola</strong>
-          </p>
-          <p *ngIf="turnosDelante > 0" class="ion-text-muted animate-fade-in">
-            {{ turnosDelante }} {{ turnosDelante === 1 ? 'turno' : 'turnos' }} delante
-          </p>
-          <p *ngIf="turnosDelante === 0" style="color: #fff;" class="animate-bounce">
-            ¡Siguiente en atención!
-          </p>
+          <ion-text style="font-size: 72px; margin: 0;" class="animate-scale-in">
+            <ion-label>{{ posicion }}</ion-label>
+          </ion-text>
+          <ion-text style="font-size: 18px; margin: 10px 0 0 0;">
+            <ion-label><strong>Posición en la cola</strong></ion-label>
+          </ion-text>
+          <ion-text *ngIf="turnosDelante > 0" class="ion-text-muted animate-fade-in">
+            <ion-label>{{ turnosDelante }} {{ turnosDelante === 1 ? 'turno' : 'turnos' }} delante</ion-label>
+          </ion-text>
+          <ion-text *ngIf="turnosDelante === 0" style="color: #fff;" class="animate-bounce">
+            <ion-label>¡Siguiente en atención!</ion-label>
+          </ion-text>
         </ion-card-content>
       </ion-card>
 
@@ -33,28 +35,28 @@
           <ion-grid>
             <ion-row>
               <ion-col size="6">
-                <p class="ion-text-muted">Número</p>
-                <h2><strong>{{ turno.numero || turno.id }}</strong></h2>
+                <ion-text class="ion-text-muted"><ion-label>Número</ion-label></ion-text>
+                <ion-text><ion-label><strong>{{ turno.numero || turno.id }}</strong></ion-label></ion-text>
               </ion-col>
               <ion-col size="6">
-                <p class="ion-text-muted">Cola</p>
-                <h2>{{ turno.cola || 'General' }}</h2>
+                <ion-text class="ion-text-muted"><ion-label>Cola</ion-label></ion-text>
+                <ion-text><ion-label>{{ turno.cola || 'General' }}</ion-label></ion-text>
               </ion-col>
             </ion-row>
             <ion-row *ngIf="turno.fecha_programada">
               <ion-col size="6">
-                <p class="ion-text-muted">Fecha</p>
-                <p>{{ turno.fecha_programada }}</p>
+                <ion-text class="ion-text-muted"><ion-label>Fecha</ion-label></ion-text>
+                <ion-text><ion-label>{{ turno.fecha_programada }}</ion-label></ion-text>
               </ion-col>
               <ion-col size="6">
-                <p class="ion-text-muted">Hora</p>
-                <p>{{ turno.hora_programada }}</p>
+                <ion-text class="ion-text-muted"><ion-label>Hora</ion-label></ion-text>
+                <ion-text><ion-label>{{ turno.hora_programada }}</ion-label></ion-text>
               </ion-col>
             </ion-row>
             <ion-row *ngIf="turno.sucursal">
               <ion-col>
-                <p class="ion-text-muted">Sucursal</p>
-                <p>{{ turno.sucursal.nombre }}</p>
+                <ion-text class="ion-text-muted"><ion-label>Sucursal</ion-label></ion-text>
+                <ion-text><ion-label>{{ turno.sucursal.nombre }}</ion-label></ion-text>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -80,9 +82,9 @@
             [elementType]="'canvas'"
             [margin]="4">
           </qrcode>
-          <p class="ion-margin-top ion-text-muted">
-            <small>Presenta este código en la sucursal</small>
-          </p>
+          <ion-text class="ion-margin-top ion-text-muted">
+            <ion-label><small>Presenta este código en la sucursal</small></ion-label>
+          </ion-text>
           
           <!-- Botón para descargar QR -->
           <ion-button expand="block" fill="outline" color="primary" (click)="descargarQR()">
@@ -126,14 +128,14 @@
       </ion-grid>
     </ng-container>
 
-    <div *ngIf="!loading && !turno" class="ion-text-center" style="margin-top: 50px;">
+    <ion-grid *ngIf="!loading && !turno" class="ion-text-center" style="margin-top: 50px;">
       <ion-icon name="calendar-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
-      <h3>No tienes un turno activo</h3>
-      <p class="ion-text-muted">Solicita un turno desde la pantalla de inicio</p>
+      <ion-text><ion-label>No tienes un turno activo</ion-label></ion-text>
+      <ion-text class="ion-text-muted"><ion-label>Solicita un turno desde la pantalla de inicio</ion-label></ion-text>
       <ion-button (click)="navCtrl.navigateRoot('/cliente/home')" color="primary">
         <ion-icon name="add-circle" slot="start"></ion-icon>
         Solicitar Turno
       </ion-button>
-    </div>
-  </div>
+    </ion-grid>
+  </ion-grid>
 </ion-content>

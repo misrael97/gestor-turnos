@@ -3,7 +3,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="ion-padding">
+  <ion-grid class="ion-padding">
     <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
 
     <ion-list *ngIf="!loading && alertas.length > 0">
@@ -15,8 +15,8 @@
             slot="start">
           </ion-icon>
           <ion-label>
-            <h2 [class.ion-text-wrap]="true">{{ alerta.mensaje }}</h2>
-            <p class="ion-text-muted">{{ alerta.created_at | date:'short' }}</p>
+            <ion-text [class.ion-text-wrap]="true"><ion-label>{{ alerta.mensaje }}</ion-label></ion-text>
+            <ion-text class="ion-text-muted"><ion-label>{{ alerta.created_at | date:'short' }}</ion-label></ion-text>
           </ion-label>
           <ion-badge *ngIf="!alerta.leida" color="primary" slot="end">Nueva</ion-badge>
         </ion-item>
@@ -29,10 +29,10 @@
       </ion-item-sliding>
     </ion-list>
 
-    <div *ngIf="!loading && alertas.length === 0" class="ion-text-center" style="margin-top: 50px;">
+    <ion-grid *ngIf="!loading && alertas.length === 0" class="ion-text-center" style="margin-top: 50px;">
       <ion-icon name="notifications-off-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
-      <h3>No tienes alertas</h3>
-      <p class="ion-text-muted">Aquí aparecerán tus notificaciones</p>
-    </div>
-  </div>
+      <ion-text><ion-label>No tienes alertas</ion-label></ion-text>
+      <ion-text class="ion-text-muted"><ion-label>Aquí aparecerán tus notificaciones</ion-label></ion-text>
+    </ion-grid>
+  </ion-grid>
 </ion-content>

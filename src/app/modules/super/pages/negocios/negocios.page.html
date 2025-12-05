@@ -12,7 +12,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="ion-padding">
+  <ion-grid class="ion-padding">
     <!-- Formulario -->
     <ion-card>
       <ion-card-header>
@@ -37,7 +37,7 @@
             <ion-input formControlName="horario" type="text" placeholder="Ej: Lun-Vie 9am-6pm"></ion-input>
           </ion-item>
 
-          <div class="ion-margin-top">
+          <ion-grid class="ion-margin-top">
             <ion-button expand="block" type="submit" color="success">
               <ion-icon slot="start" :name="editando ? 'checkmark' : 'add'"></ion-icon>
               {{ editando ? 'Actualizar' : 'Crear' }} Negocio
@@ -46,7 +46,7 @@
               <ion-icon slot="start" name="close"></ion-icon>
               Cancelar
             </ion-button>
-          </div>
+          </ion-grid>
         </form>
       </ion-card-content>
     </ion-card>
@@ -62,10 +62,10 @@
         <ion-list *ngIf="!loading && negocios.length > 0">
           <ion-item *ngFor="let negocio of negocios">
             <ion-label>
-              <h2><strong>{{ negocio.nombre }}</strong></h2>
-              <p><ion-icon name="location"></ion-icon> {{ negocio.direccion }}</p>
-              <p *ngIf="negocio.telefono"><ion-icon name="call"></ion-icon> {{ negocio.telefono }}</p>
-              <p *ngIf="negocio.horario"><ion-icon name="time"></ion-icon> {{ negocio.horario }}</p>
+              <ion-text><ion-label><strong>{{ negocio.nombre }}</strong></ion-label></ion-text>
+              <ion-text><ion-label><ion-icon name="location"></ion-icon> {{ negocio.direccion }}</ion-label></ion-text>
+              <ion-text *ngIf="negocio.telefono"><ion-label><ion-icon name="call"></ion-icon> {{ negocio.telefono }}</ion-label></ion-text>
+              <ion-text *ngIf="negocio.horario"><ion-label><ion-icon name="time"></ion-icon> {{ negocio.horario }}</ion-label></ion-text>
             </ion-label>
             <ion-buttons slot="end">
               <ion-button color="primary" (click)="editarNegocio(negocio)">
@@ -81,11 +81,11 @@
         <ion-card *ngIf="!loading && negocios.length === 0">
           <ion-card-content class="ion-text-center">
             <ion-icon name="business-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
-            <p>No hay negocios registrados</p>
-            <p class="ion-text-muted">Crea tu primer negocio usando el formulario de arriba</p>
+            <ion-text><ion-label>No hay negocios registrados</ion-label></ion-text>
+            <ion-text class="ion-text-muted"><ion-label>Crea tu primer negocio usando el formulario de arriba</ion-label></ion-text>
           </ion-card-content>
         </ion-card>
       </ion-card-content>
     </ion-card>
-  </div>
+  </ion-grid>
 </ion-content>

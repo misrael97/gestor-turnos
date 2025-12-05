@@ -1,36 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Gestor de Turnos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
-  <div class="login-container">
-    <div class="auth-card">
-      <h1 class="ion-text-center">Gestor de Turnos</h1>
-      <p class="ion-text-center text-secondary ion-margin-bottom">
-        Ingresa tus credenciales para continuar.
-      </p>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-center" style="min-height: 80vh;">
+      <ion-col size="12" size-md="6" size-lg="4">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">
+              Iniciar Sesión
+            </ion-card-title>
+            <ion-card-subtitle class="ion-text-center">
+              Ingresa tus credenciales para continuar
+            </ion-card-subtitle>
+          </ion-card-header>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label class="form-label">Email</label>
-          <ion-item lines="none">
-            <ion-input type="email" placeholder="admin@admin.com" formControlName="email">
-            </ion-input>
-          </ion-item>
-        </div>
+          <ion-card-content>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <ion-list>
+                <ion-item>
+                  <ion-label position="floating">Email</ion-label>
+                  <ion-input 
+                    type="email" 
+                    placeholder="admin@admin.com" 
+                    formControlName="email">
+                  </ion-input>
+                </ion-item>
 
-        <div class="form-group">
-          <label class="form-label">Contraseña</label>
-          <ion-item lines="none">
-            <ion-input type="password" placeholder="••••••••" formControlName="password">
-            </ion-input>
-          </ion-item>
-        </div>
+                <ion-item>
+                  <ion-label position="floating">Contraseña</ion-label>
+                  <ion-input 
+                    type="password" 
+                    placeholder="••••••••" 
+                    formControlName="password">
+                  </ion-input>
+                </ion-item>
+              </ion-list>
 
-        <ion-button expand="block" type="submit" color="primary" [disabled]="loading" class="ion-margin-top">
-          {{ loading ? 'Entrando...' : 'Iniciar Sesión' }}
-        </ion-button>
+              <ion-button 
+                expand="block" 
+                type="submit" 
+                color="primary" 
+                [disabled]="loading" 
+                class="ion-margin-top">
+                <ion-icon slot="start" name="log-in-outline"></ion-icon>
+                <ion-label>{{ loading ? 'Entrando...' : 'Iniciar Sesión' }}</ion-label>
+              </ion-button>
 
-        <p class="ion-text-center ion-margin-top text-secondary">
-          Usa las credenciales de tu cuenta
-        </p>
-      </form>
-    </div>
-  </div>
+              <ion-text color="medium">
+                <ion-label class="ion-text-center ion-margin-top" style="display: block;">
+                  Usa las credenciales de tu cuenta
+                </ion-label>
+              </ion-text>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

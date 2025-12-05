@@ -1,37 +1,37 @@
 <ion-content [fullscreen]="true">
-  <div class="display-container">
+  <ion-grid class="display-container">
     <!-- Sidebar -->
-    <div class="sidebar">
+    <ion-grid class="sidebar">
       <!-- Su Turno Section -->
-      <div class="su-turno-section">
-        <div class="header">SU TURNO</div>
-        <div class="turn-info">
-          <div class="numero-box">
-            <span class="label">Número</span>
-            <span class="value">{{ currentTurn.numero }}</span>
-          </div>
-          <div class="puesto-box">
-            <span class="label">Puesto</span>
-            <span class="value">{{ currentTurn.puesto }}</span>
-          </div>
-        </div>
-      </div>
+      <ion-grid class="su-turno-section">
+        <ion-grid class="header"><ion-label>SU TURNO</ion-label></ion-grid>
+        <ion-grid class="turn-info">
+          <ion-grid class="numero-box">
+            <ion-label class="label">Número</ion-label>
+            <ion-label class="value">{{ currentTurn.numero }}</ion-label>
+          </ion-grid>
+          <ion-grid class="puesto-box">
+            <ion-label class="label">Puesto</ion-label>
+            <ion-label class="value">{{ currentTurn.puesto }}</ion-label>
+          </ion-grid>
+        </ion-grid>
+      </ion-grid>
 
       <!-- Numeros Llamados Section -->
-      <div class="numeros-llamados-section">
-        <div class="header">NÚMEROS LLAMADOS</div>
-        <div class="list-container">
-          <div class="list-item" *ngFor="let item of calledNumbers">
-            <span class="numero">{{ item.numero }}</span>
-            <span class="puesto">{{ item.puesto }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      <ion-grid class="numeros-llamados-section">
+        <ion-grid class="header"><ion-label>NÚMEROS LLAMADOS</ion-label></ion-grid>
+        <ion-grid class="list-container">
+          <ion-grid class="list-item" *ngFor="let item of calledNumbers">
+            <ion-label class="numero">{{ item.numero }}</ion-label>
+            <ion-label class="puesto">{{ item.puesto }}</ion-label>
+          </ion-grid>
+        </ion-grid>
+      </ion-grid>
+    </ion-grid>
 
     <!-- Main Content (Right Side) -->
-    <div class="main-content">
+    <ion-grid class="main-content">
       <!-- Placeholder for video or other content -->
-    </div>
-  </div>
+    </ion-grid>
+  </ion-grid>
 </ion-content>

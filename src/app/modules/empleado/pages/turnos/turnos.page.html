@@ -12,7 +12,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div class="ion-padding">
+  <ion-grid class="ion-padding">
     <ion-button expand="block" color="success" (click)="llamarSiguiente()">
       <ion-icon slot="start" name="megaphone"></ion-icon>
       Llamar Siguiente Turno
@@ -21,9 +21,9 @@
     <ion-list *ngIf="!loading && turnos.length > 0">
       <ion-item *ngFor="let turno of turnos">
         <ion-label>
-          <h2>Turno #{{ turno.numero }}</h2>
-          <p>Cliente: {{ turno.usuario?.name || 'Anónimo' }}</p>
-          <p>Estado: {{ turno.estado }}</p>
+          <ion-text><ion-label>Turno #{{ turno.numero }}</ion-label></ion-text>
+          <ion-text><ion-label>Cliente: {{ turno.usuario?.name || 'Anónimo' }}</ion-label></ion-text>
+          <ion-text><ion-label>Estado: {{ turno.estado }}</ion-label></ion-text>
         </ion-label>
         <ion-buttons slot="end">
           <ion-button color="primary" (click)="confirmarTurno(turno.id)">
@@ -38,10 +38,10 @@
 
     <ion-card *ngIf="!loading && turnos.length === 0">
       <ion-card-content>
-        <p class="ion-text-center">No hay turnos pendientes</p>
+        <ion-text class="ion-text-center"><ion-label>No hay turnos pendientes</ion-label></ion-text>
       </ion-card-content>
     </ion-card>
 
     <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-  </div>
+  </ion-grid>
 </ion-content>

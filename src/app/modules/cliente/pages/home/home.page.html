@@ -1,27 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Bienvenido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
-  <h1>¡Bienvenido!</h1>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        Selecciona una sucursal
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Sucursal</ion-label>
+        <ion-select [(ngModel)]="sucursalSeleccionada" placeholder="Elige una sucursal">
+          <ion-select-option *ngFor="let sucursal of sucursales" [value]="sucursal.id">
+            {{ sucursal.nombre }} - {{ sucursal.direccion }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
 
-  <!-- Selector de sucursal -->
-  <ion-item>
-    <ion-label position="stacked">Selecciona una sucursal</ion-label>
-    <ion-select [(ngModel)]="sucursalSeleccionada" placeholder="Elige una sucursal">
-      <ion-select-option *ngFor="let sucursal of sucursales" [value]="sucursal.id">
-        {{ sucursal.nombre }} - {{ sucursal.direccion }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-button expand="block" color="primary" (click)="obtenerTurno()" [disabled]="loading || !sucursalSeleccionada">
-    <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-    <span *ngIf="!loading">Obtener un Número de Turno</span>
-  </ion-button>
+      <ion-button expand="block" color="primary" (click)="obtenerTurno()" [disabled]="loading || !sucursalSeleccionada">
+        <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+        <ion-label *ngIf="!loading">Obtener un Número de Turno</ion-label>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 
   <ion-card>
     <ion-card-header>
       <ion-card-title>Citas Programadas</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Solicita tu turno en línea antes de llegar a la sucursal.</p>
+      <ion-text>
+        <ion-label>Solicita tu turno en línea antes de llegar a la sucursal.</ion-label>
+      </ion-text>
       
       <!-- Selector de fecha -->
       <ion-item>
@@ -52,7 +67,7 @@
         (click)="solicitarTurnoEnLinea()" 
         [disabled]="loading || !sucursalSeleccionada || !fechaCita || !horaCita">
         <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-        <span *ngIf="!loading">Solicitar Turno en Línea</span>
+        <ion-label *ngIf="!loading">Solicitar Turno en Línea</ion-label>
       </ion-button>
     </ion-card-content>
   </ion-card>

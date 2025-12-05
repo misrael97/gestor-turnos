@@ -1,12 +1,12 @@
 <ion-content>
-  <div class="ion-padding ion-text-center">
-    <div *ngIf="!escaneando">
+  <ion-grid class="ion-padding ion-text-center">
+    <ion-grid *ngIf="!escaneando">
       <ion-icon name="qr-code-outline" style="font-size: 120px; color: var(--ion-color-primary);"></ion-icon>
       
-      <h1>Escanear QR del Cliente</h1>
-      <p class="ion-text-muted">
-        Escanea el código QR del turno del cliente para validarlo y marcarlo como atendido
-      </p>
+      <ion-text><ion-label>Escanear QR del Cliente</ion-label></ion-text>
+      <ion-text class="ion-text-muted">
+        <ion-label>Escanea el código QR del turno del cliente para validarlo y marcarlo como atendido</ion-label>
+      </ion-text>
 
       <ion-button 
         expand="block" 
@@ -29,19 +29,19 @@
           <ion-card-title>Instrucciones</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ol style="text-align: left;">
-            <li>Pide al cliente que muestre su código QR</li>
-            <li>Presiona "Iniciar Escaneo"</li>
-            <li>Apunta la cámara hacia el código QR</li>
-            <li>Espera la validación automática</li>
-            <li>Confirma para marcar como atendido</li>
-          </ol>
+          <ion-list style="text-align: left;">
+            <ion-item lines="none"><ion-label>1. Pide al cliente que muestre su código QR</ion-label></ion-item>
+            <ion-item lines="none"><ion-label>2. Presiona "Iniciar Escaneo"</ion-label></ion-item>
+            <ion-item lines="none"><ion-label>3. Apunta la cámara hacia el código QR</ion-label></ion-item>
+            <ion-item lines="none"><ion-label>4. Espera la validación automática</ion-label></ion-item>
+            <ion-item lines="none"><ion-label>5. Confirma para marcar como atendido</ion-label></ion-item>
+          </ion-list>
         </ion-card-content>
       </ion-card>
-    </div>
+    </ion-grid>
 
-    <div *ngIf="escaneando">
-      <div id="qr-reader" style="width: 100%; max-width: 500px; margin: 0 auto;"></div>
+    <ion-grid *ngIf="escaneando">
+      <ion-grid id="qr-reader" style="width: 100%; max-width: 500px; margin: 0 auto;"></ion-grid>
       
       <ion-button 
         expand="block" 
@@ -51,6 +51,6 @@
         <ion-icon name="close" slot="start"></ion-icon>
         Cancelar
       </ion-button>
-    </div>
-  </div>
+    </ion-grid>
+  </ion-grid>
 </ion-content>

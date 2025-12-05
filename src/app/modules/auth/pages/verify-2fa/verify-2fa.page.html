@@ -1,56 +1,56 @@
 <ion-content class="ion-padding">
-  <div class="verification-container">
-    <div class="auth-card">
+  <ion-grid class="verification-container">
+    <ion-grid class="auth-card">
       <!-- Icono de seguridad circular -->
-      <div class="icon-circle">
+      <ion-grid class="icon-circle">
         <ion-icon name="lock-closed"></ion-icon>
-      </div>
+      </ion-grid>
 
-      <h2 class="ion-text-center">Verificación de Seguridad</h2>
-      <p class="ion-text-center text-secondary ion-margin-bottom">
-        Hemos enviado un código de 6 dígitos a tu email
-      </p>
+      <ion-text class="ion-text-center"><ion-label>Verificación de Seguridad</ion-label></ion-text>
+      <ion-text class="ion-text-center text-secondary ion-margin-bottom">
+        <ion-label>Hemos enviado un código de 6 dígitos a tu email</ion-label>
+      </ion-text>
 
       <!-- Formulario de código -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label class="form-label">Código de Verificación</label>
+        <ion-grid class="form-group">
+          <ion-label class="form-label">Código de Verificación</ion-label>
           <ion-item lines="none">
             <ion-input type="text" formControlName="code" placeholder="000000" maxlength="6" inputmode="numeric"
               pattern="[0-9]*" class="code-input">
             </ion-input>
           </ion-item>
-          <p class="ion-text-center text-secondary" style="font-size: 0.85rem; margin-top: 0.5rem;">
-            Ingresa el código de 6 dígitos
-          </p>
-        </div>
+          <ion-text class="ion-text-center text-secondary" style="font-size: 0.85rem; margin-top: 0.5rem;">
+            <ion-label>Ingresa el código de 6 dígitos</ion-label>
+          </ion-text>
+        </ion-grid>
 
         <ion-button expand="block" type="submit" color="primary" [disabled]="loading || form.invalid"
           class="ion-margin-top">
           <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-          <span *ngIf="!loading">Verificar Código</span>
+          <ion-label *ngIf="!loading">Verificar Código</ion-label>
         </ion-button>
       </form>
 
       <!-- Reenviar código -->
-      <div class="ion-text-center ion-margin-top">
-        <p class="text-secondary" style="margin-bottom: 0.5rem;">
-          ¿No recibiste el código?
-        </p>
+      <ion-grid class="ion-text-center ion-margin-top">
+        <ion-text class="text-secondary" style="margin-bottom: 0.5rem;">
+          <ion-label>¿No recibiste el código?</ion-label>
+        </ion-text>
         <ion-button fill="clear" size="small" (click)="resendCode()" [disabled]="countdown > 0 || resendLoading">
           <ion-spinner *ngIf="resendLoading" name="crescent" slot="start"></ion-spinner>
-          <span *ngIf="countdown > 0" class="resend-text">Reenviar en {{ countdown }}s</span>
-          <span *ngIf="countdown === 0 && !resendLoading" class="resend-text">Reenviar código</span>
+          <ion-label *ngIf="countdown > 0" class="resend-text">Reenviar en {{ countdown }}s</ion-label>
+          <ion-label *ngIf="countdown === 0 && !resendLoading" class="resend-text">Reenviar código</ion-label>
         </ion-button>
-      </div>
+      </ion-grid>
 
       <!-- Información de seguridad -->
-      <div class="security-info ion-margin-top">
+      <ion-grid class="security-info ion-margin-top">
         <ion-icon name="information-circle-outline" color="primary"></ion-icon>
-        <small class="text-secondary">
-          <strong>Seguridad:</strong> Este código expira en 10 minutos. No lo compartas con nadie.
-        </small>
-      </div>
-    </div>
-  </div>
+        <ion-text class="text-secondary">
+          <ion-label><strong>Seguridad:</strong> Este código expira en 10 minutos. No lo compartas con nadie.</ion-label>
+        </ion-text>
+      </ion-grid>
+    </ion-grid>
+  </ion-grid>
 </ion-content>
