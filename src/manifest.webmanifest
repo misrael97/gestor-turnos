@@ -5,9 +5,10 @@
   "theme_color": "#3880ff",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/",
-  "start_url": "/",
+  "scope": "./",
+  "start_url": "./",
   "orientation": "portrait",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "assets/icon/icon-72x72.png",
@@ -43,7 +44,7 @@
       "src": "assets/icon/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "assets/icon/icon-384x384.png",
@@ -55,7 +56,7 @@
       "src": "assets/icon/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [
