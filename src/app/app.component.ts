@@ -79,20 +79,25 @@ export class AppComponent implements OnInit {
         .pipe(filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY'))
         .subscribe(async (event) => {
           console.log("✅ PWA - Nueva versión disponible", event);
-          await this.promptUserToUpdate();
+          // Activar inmediatamente y recargar
+          await this.swUpdate.activateUpdate();
+          window.location.reload();
         });
 
-      // Verificar actualizaciones cada 6 horas
+      // Verificar actualizaciones al iniciar
+      this.swUpdate.checkForUpdate().then(updateAvailable => {
+        if (updateAvailable) {
+          console.log("🔄 Actualización encontrada al iniciar");
+        }
+      }).catch(err => {
+        console.error("❌ Error verificando actualizaciones:", err);
+      });
+
+      // Verificar actualizaciones cada 30 segundos (para desarrollo/pruebas)
+      // En producción puedes cambiar a 6 horas: 6 * 60 * 60 * 1000
       setInterval(() => {
-        this.swUpdate.checkForUpdate().then(() => {
-          console.log("🔍 PWA - Verificación de actualizaciones completada");
-        }).catch(err => {
-          console.error("❌ Error verificando actualizaciones:", err);
-        });
-      }, 6 * 60 * 60 * 1000);
-
-      // Verificación inicial
-      this.swUpdate.checkForUpdate();
+        this.swUpdate.checkForUpdate();
+      }, 30000);
     } else {
       console.log("ℹ️ PWA - Service Worker deshabilitado (modo desarrollo)");
     }
