@@ -23,29 +23,18 @@
               <ion-list>
                 <ion-item>
                   <ion-label position="floating">Email</ion-label>
-                  <ion-input 
-                    type="email" 
-                    placeholder="admin@admin.com" 
-                    formControlName="email">
+                  <ion-input type="email" placeholder="test@example.com" formControlName="email">
                   </ion-input>
                 </ion-item>
 
                 <ion-item>
                   <ion-label position="floating">Contraseña</ion-label>
-                  <ion-input 
-                    type="password" 
-                    placeholder="••••••••" 
-                    formControlName="password">
+                  <ion-input type="password" placeholder="••••••••" formControlName="password">
                   </ion-input>
                 </ion-item>
               </ion-list>
 
-              <ion-button 
-                expand="block" 
-                type="submit" 
-                color="primary" 
-                [disabled]="loading" 
-                class="ion-margin-top">
+              <ion-button expand="block" type="submit" color="primary" [disabled]="loading" class="ion-margin-top">
                 <ion-icon slot="start" name="log-in-outline"></ion-icon>
                 <ion-label>{{ loading ? 'Entrando...' : 'Iniciar Sesión' }}</ion-label>
               </ion-button>
@@ -53,6 +42,16 @@
               <ion-text color="medium">
                 <ion-label class="ion-text-center ion-margin-top" style="display: block;">
                   Usa las credenciales de tu cuenta
+                </ion-label>
+              </ion-text>
+
+              <!-- Enlace de registro -->
+              <ion-text class="ion-text-center" style="display: block; margin-top: 16px;">
+                <ion-label>
+                  ¿No tienes cuenta?
+                  <a routerLink="/auth/register" style="color: #3880ff; font-weight: 600; text-decoration: none;">
+                    Regístrate
+                  </a>
                 </ion-label>
               </ion-text>
             </form>

@@ -48,13 +48,16 @@
     <!-- Navbar horizontal para Cliente y Empleado -->
     <ion-header *ngIf="!mostrarSidebar()">
       <ion-toolbar color="primary">
-        <ion-title>{{ pageTitle }}</ion-title>
+        <!-- Título alineado a la izquierda -->
+        <ion-title >{{ pageTitle }}</ion-title>
         <ion-buttons slot="end">
+          <!-- Avatar con iniciales -->
           <ion-grid class="user-avatar" style="margin-right: 8px;">
             <ion-label>{{ getUserInitials() }}</ion-label>
           </ion-grid>
-          <ion-button fill="clear" (click)="cerrarSesion()">
-            <ion-icon name="log-out-outline"></ion-icon>
+          <!-- Botón de cerrar sesión con color blanco visible -->
+          <ion-button fill="clear" (click)="cerrarSesion()" style="--color: white; color: white;">
+            <ion-icon name="log-out-outline" style="color: white; font-size: 24px;"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
