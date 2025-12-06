@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8000/api',
+  apiUrl: 'https://gturnos.tech/api',
   firebase: {
     apiKey: "AIzaSyDYfVmUpqrnoaLUSEmWIHu12f32Dg9aZgk",
     authDomain: "gestor-turnos-6d05b.firebaseapp.com",
