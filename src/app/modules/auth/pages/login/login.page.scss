@@ -1,5 +1,21 @@
-// Solo estilos de ajuste mínimos, todo es componente Ionic
-ion-card {
-  max-width: 500px;
-  margin: 0 auto;
+ion-content {
+  --background: #ffffff;
+}
+
+h1 {
+  color: #3880ff;
+  font-weight: 500;
+}
+
+ion-input {
+  --padding-start: 0;
+  --padding-end: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+ion-button {
+  --border-radius: 4px;
+  font-weight: 600;
+  height: 48px;
 }

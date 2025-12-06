@@ -1,9 +1,3 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Bienvenido</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding">
   <ion-card>
     <ion-card-header>
@@ -37,35 +31,17 @@
       <ion-text>
         <ion-label>Solicita tu turno en línea antes de llegar a la sucursal.</ion-label>
       </ion-text>
-      
-      <!-- Selector de fecha -->
+
+      <!-- Selector de fecha y hora -->
       <ion-item>
-        <ion-label position="stacked">Fecha de la cita</ion-label>
-        <ion-datetime 
-          displayFormat="DD/MM/YYYY" 
-          [(ngModel)]="fechaCita"
-          [min]="fechaMinima"
-          [max]="fechaMaxima"
-          placeholder="Selecciona una fecha">
-        </ion-datetime>
+        <ion-label position="stacked">Fecha y hora de la cita</ion-label>
+        <ion-input type="datetime-local" [(ngModel)]="fechaCita" [min]="fechaMinima" [max]="fechaMaxima"
+          placeholder="Selecciona fecha y hora">
+        </ion-input>
       </ion-item>
 
-      <!-- Selector de hora -->
-      <ion-item>
-        <ion-label position="stacked">Hora de la cita</ion-label>
-        <ion-datetime 
-          displayFormat="HH:mm" 
-          [(ngModel)]="horaCita"
-          minuteValues="0,15,30,45"
-          placeholder="Selecciona una hora">
-        </ion-datetime>
-      </ion-item>
-
-      <ion-button 
-        expand="block" 
-        color="primary" 
-        (click)="solicitarTurnoEnLinea()" 
-        [disabled]="loading || !sucursalSeleccionada || !fechaCita || !horaCita">
+      <ion-button expand="block" color="primary" (click)="solicitarTurnoEnLinea()"
+        [disabled]="loading || !sucursalSeleccionada || !fechaCita ">
         <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
         <ion-label *ngIf="!loading">Solicitar Turno en Línea</ion-label>
       </ion-button>

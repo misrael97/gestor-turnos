@@ -12,10 +12,9 @@ export class HomePage implements OnInit {
   sucursales: any[] = [];
   sucursalSeleccionada: number | null = null;
   loading = false;
-  
+
   // Propiedades para citas programadas
   fechaCita: string = '';
-  horaCita: string = '';
   fechaMinima: string;
   fechaMaxima: string;
 
@@ -26,12 +25,12 @@ export class HomePage implements OnInit {
   ) {
     // Configurar fechas mínima y máxima
     const hoy = new Date();
-    this.fechaMinima = hoy.toISOString();
-    
+    this.fechaMinima = this.formatDateTimeLocal(hoy);
+
     // Máximo 30 días adelante
     const maxFecha = new Date();
-    maxFecha.setDate(maxFecha.getDate() + 30);
-    this.fechaMaxima = maxFecha.toISOString();
+    maxFecha.setFullYear(maxFecha.getFullYear() + 1);
+    this.fechaMaxima = this.formatDateTimeLocal(maxFecha);
   }
 
   ngOnInit() {
@@ -42,12 +41,12 @@ export class HomePage implements OnInit {
     this.loading = true;
     console.log('Página Home cargada - Cargando sucursales desde backend...');
     console.log('URL de sucursales: /api/sucursales');
-    
+
     this.turnosService.getSucursales().subscribe({
       next: (res: any) => {
         console.log('✅ Respuesta del backend (sucursales):', res);
         console.log('Tipo de respuesta:', typeof res);
-        
+
         // Verificar si la respuesta es HTML (error)
         if (typeof res === 'string' && res.includes('<!DOCTYPE') || res.includes('<html')) {
           console.error('❌ El backend devolvió HTML en lugar de JSON');
@@ -60,7 +59,7 @@ export class HomePage implements OnInit {
           }).then(toast => toast.present());
           return;
         }
-        
+
         // Manejar diferentes formatos de respuesta
         if (Array.isArray(res)) {
           this.sucursales = res;
@@ -72,11 +71,11 @@ export class HomePage implements OnInit {
           console.warn('⚠️ Formato de respuesta no reconocido:', res);
           this.sucursales = [];
         }
-        
+
         console.log('📍 Sucursales procesadas:', this.sucursales.length, 'encontradas');
         console.log('Datos:', this.sucursales);
         this.loading = false;
-        
+
         // Seleccionar la primera sucursal por defecto si existe
         if (this.sucursales.length > 0) {
           this.sucursalSeleccionada = this.sucursales[0].id;
@@ -97,14 +96,14 @@ export class HomePage implements OnInit {
         console.error('URL:', err.url);
         console.error('Error completo:', err);
         console.error('Error body:', err.error);
-        
+
         // Verificar si es HTML
         if (typeof err.error === 'string' && (err.error.includes('<!DOCTYPE') || err.error.includes('<html'))) {
           console.error('❌ La respuesta de error es HTML - El endpoint probablemente no existe en Laravel');
         }
-        
+
         this.loading = false;
-        
+
         let mensaje = 'No se pudieron cargar las sucursales';
         if (err.status === 404) {
           mensaje = 'El endpoint /api/sucursales no existe en el backend';
@@ -113,7 +112,7 @@ export class HomePage implements OnInit {
         } else if (err.status === 500) {
           mensaje = 'Error del servidor. Verifica los logs de Laravel';
         }
-        
+
         this.toastCtrl.create({
           message: mensaje,
           duration: 4000,
@@ -125,7 +124,7 @@ export class HomePage implements OnInit {
 
   async obtenerTurno() {
     console.log('Botón "Obtener Turno" clickeado - Enviando petición...');
-    
+
     if (!this.sucursalSeleccionada) {
       const toast = await this.toastCtrl.create({
         message: 'Por favor selecciona una sucursal',
@@ -135,16 +134,16 @@ export class HomePage implements OnInit {
       await toast.present();
       return;
     }
-    
+
     this.loading = true;
-    
+
     const datos = {
       negocio_id: this.sucursalSeleccionada, // ✅ Usar la sucursal seleccionada
       cola_id: 1,
       tipo: 'presencial'
     };
     console.log('Datos enviados:', datos);
-    
+
     this.turnosService.crearTurno(datos).subscribe({
       next: async (res) => {
         console.log('Turno creado exitosamente:', res);
@@ -161,13 +160,13 @@ export class HomePage implements OnInit {
         console.error('Error completo:', err);
         console.error('Detalles del error:', err.error);
         this.loading = false;
-        
+
         let mensaje = 'Error al crear turno';
-        
+
         // Verificar si ya tiene un turno activo
         if (err.status === 422 && (err.error?.error?.includes('turno activo') || err.error?.message?.includes('turno activo'))) {
           mensaje = err.error?.error || err.error?.message || 'Ya tienes un turno activo';
-          
+
           const toast = await this.toastCtrl.create({
             message: mensaje + '. Ve a "Mi Turno" para verlo.',
             duration: 5000,
@@ -185,14 +184,14 @@ export class HomePage implements OnInit {
           await toast.present();
           return;
         }
-        
+
         // Verificar si es un conflicto de horario
         if (err.status === 409 || err.error?.message?.includes('ocupado') || err.error?.message?.includes('disponible')) {
           mensaje = err.error?.message || 'Este horario ya está ocupado. Por favor, elige otro.';
         } else if (err.error?.message || err.error?.error) {
           mensaje = err.error?.message || err.error?.error;
         }
-        
+
         const toast = await this.toastCtrl.create({
           message: mensaje,
           duration: 4000,
@@ -205,7 +204,7 @@ export class HomePage implements OnInit {
 
   async solicitarTurnoEnLinea() {
     console.log('Botón "Solicitar Turno en Línea" clickeado - Enviando petición...');
-    
+
     if (!this.sucursalSeleccionada) {
       const toast = await this.toastCtrl.create({
         message: 'Por favor selecciona una sucursal',
@@ -215,8 +214,8 @@ export class HomePage implements OnInit {
       await toast.present();
       return;
     }
-    
-    if (!this.fechaCita || !this.horaCita) {
+
+    if (!this.fechaCita) {
       const toast = await this.toastCtrl.create({
         message: 'Por favor selecciona fecha y hora',
         duration: 2000,
@@ -225,32 +224,28 @@ export class HomePage implements OnInit {
       await toast.present();
       return;
     }
-    
+
     this.loading = true;
-    
-    // Combinar fecha y hora
+
+    // Procesar la fecha y hora seleccionada
     const fechaHora = new Date(this.fechaCita);
-    const horaSeleccionada = new Date(this.horaCita);
-    fechaHora.setHours(horaSeleccionada.getHours());
-    fechaHora.setMinutes(horaSeleccionada.getMinutes());
-    
+
     const datos = {
       negocio_id: this.sucursalSeleccionada, // ✅ Usar la sucursal seleccionada
       cola_id: 1,
       tipo: 'online',
       programado: true,
       fecha_programada: fechaHora.toISOString().split('T')[0], // YYYY-MM-DD
-      hora_programada: `${horaSeleccionada.getHours().toString().padStart(2, '0')}:${horaSeleccionada.getMinutes().toString().padStart(2, '0')}` // HH:mm
+      hora_programada: `${fechaHora.getHours().toString().padStart(2, '0')}:${fechaHora.getMinutes().toString().padStart(2, '0')}` // HH:mm
     };
     console.log('Datos enviados:', datos);
-    
+
     this.turnosService.crearTurno(datos).subscribe({
       next: async (res) => {
         console.log('Turno programado exitosamente:', res);
         this.loading = false;
         // Limpiar los campos
         this.fechaCita = '';
-        this.horaCita = '';
         const toast = await this.toastCtrl.create({
           message: 'Turno programado exitosamente',
           duration: 2000,
@@ -263,15 +258,15 @@ export class HomePage implements OnInit {
         console.error('Error completo:', err);
         console.error('Detalles del error:', err.error);
         this.loading = false;
-        
+
         let mensaje = 'Error al programar el turno';
         let color: 'danger' | 'warning' = 'danger';
-        
+
         // Verificar si ya tiene un turno activo
         if (err.status === 422 && (err.error?.error?.includes('turno activo') || err.error?.message?.includes('turno activo'))) {
           mensaje = err.error?.error || err.error?.message || 'Ya tienes un turno activo';
           color = 'warning';
-          
+
           // Mostrar el toast con opción de ver el turno existente
           const toast = await this.toastCtrl.create({
             message: mensaje + '. Ve a "Mi Turno" para verlo.',
@@ -293,7 +288,7 @@ export class HomePage implements OnInit {
           await toast.present();
           return;
         }
-        
+
         // Verificar si es un conflicto de horario
         if (err.status === 409) {
           mensaje = err.error?.message || 'Este horario ya está ocupado en esta sucursal. Por favor, elige otra fecha/hora.';
@@ -310,9 +305,9 @@ export class HomePage implements OnInit {
         } else if (err.error?.error) {
           mensaje = err.error.error;
         }
-        
+
         console.warn('⚠️ Mensaje al usuario:', mensaje);
-        
+
         const toast = await this.toastCtrl.create({
           message: mensaje,
           duration: 4000,
@@ -321,5 +316,15 @@ export class HomePage implements OnInit {
         await toast.present();
       }
     });
+  }
+
+  // Formatear fecha para datetime-local input
+  private formatDateTimeLocal(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 }

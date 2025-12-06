@@ -8,55 +8,58 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-align-items-center" style="min-height: 80vh;">
       <ion-col size="12" size-md="6" size-lg="4">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title class="ion-text-center">
-              Iniciar Sesión
-            </ion-card-title>
-            <ion-card-subtitle class="ion-text-center">
-              Ingresa tus credenciales para continuar
-            </ion-card-subtitle>
-          </ion-card-header>
+        <!-- Título de la PWA -->
+        <ion-text color="primary" class="ion-text-center">
+          <h1 style="font-size: 28px; font-weight: 500; margin-bottom: 40px;">PWA Gestor de Turnos</h1>
+        </ion-text>
 
-          <ion-card-content>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <ion-list>
-                <ion-item>
-                  <ion-label position="floating">Email</ion-label>
-                  <ion-input type="email" placeholder="test@example.com" formControlName="email">
-                  </ion-input>
-                </ion-item>
+        <!-- Formulario sin tarjeta -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <ion-list lines="none" style="background: transparent;">
+            <!-- Campo de Email -->
+            <ion-item lines="none" style="--background: transparent; margin-bottom: 5px;">
+              <ion-input type="email" placeholder="Correo" formControlName="email"
+                style="border-bottom: 1px solid #ccc; --padding-start: 0;">
+              </ion-input>
+            </ion-item>
+            <!-- Mensaje de error para email -->
+            <ion-text color="danger" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+              <p style="font-size: 12px; margin: 5px 0 15px 0;">
+                <span *ngIf="form.get('email')?.errors?.['required']">El correo es requerido</span>
+                <span *ngIf="form.get('email')?.errors?.['email']">Ingresa un correo válido</span>
+              </p>
+            </ion-text>
 
-                <ion-item>
-                  <ion-label position="floating">Contraseña</ion-label>
-                  <ion-input type="password" placeholder="••••••••" formControlName="password">
-                  </ion-input>
-                </ion-item>
-              </ion-list>
+            <!-- Campo de Contraseña -->
+            <ion-item lines="none" style="--background: transparent; margin-bottom: 5px;">
+              <ion-input type="password" placeholder="Contraseña" formControlName="password"
+                style="border-bottom: 1px solid #ccc; --padding-start: 0;">
+              </ion-input>
+            </ion-item>
+            <!-- Mensaje de error para contraseña -->
+            <ion-text color="danger" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+              <p style="font-size: 12px; margin: 5px 0 15px 0;">
+                La contraseña es requerida
+              </p>
+            </ion-text>
+          </ion-list>
 
-              <ion-button expand="block" type="submit" color="primary" [disabled]="loading" class="ion-margin-top">
-                <ion-icon slot="start" name="log-in-outline"></ion-icon>
-                <ion-label>{{ loading ? 'Entrando...' : 'Iniciar Sesión' }}</ion-label>
-              </ion-button>
+          <!-- Botón de Iniciar Sesión -->
+          <ion-button expand="block" type="submit" color="primary" [disabled]="form.invalid || loading"
+            style="margin-top: 20px; margin-bottom: 20px; text-transform: uppercase;">
+            {{ loading ? 'ENTRANDO...' : 'INICIAR SESIÓN' }}
+          </ion-button>
 
-              <ion-text color="medium">
-                <ion-label class="ion-text-center ion-margin-top" style="display: block;">
-                  Usa las credenciales de tu cuenta
-                </ion-label>
-              </ion-text>
-
-              <!-- Enlace de registro -->
-              <ion-text class="ion-text-center" style="display: block; margin-top: 16px;">
-                <ion-label>
-                  ¿No tienes cuenta?
-                  <a routerLink="/auth/register" style="color: #3880ff; font-weight: 600; text-decoration: none;">
-                    Regístrate
-                  </a>
-                </ion-label>
-              </ion-text>
-            </form>
-          </ion-card-content>
-        </ion-card>
+          <!-- Enlace de registro -->
+          <ion-text class="ion-text-center" style="display: block;">
+            <p style="margin: 0; color: #666;">
+              ¿No tienes cuenta?
+              <a routerLink="/auth/register" style="color: #3880ff; text-decoration: none; font-weight: 500;">
+                Regístrate
+              </a>
+            </p>
+          </ion-text>
+        </form>
       </ion-col>
     </ion-row>
   </ion-grid>

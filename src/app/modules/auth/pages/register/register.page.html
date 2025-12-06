@@ -8,52 +8,73 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-align-items-center" style="min-height: 80vh;">
       <ion-col size="12" size-md="6" size-lg="4">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title class="ion-text-center">
-              Crear Cuenta
-            </ion-card-title>
-            <ion-card-subtitle class="ion-text-center">
-              Completa el formulario para registrarte
-            </ion-card-subtitle>
-          </ion-card-header>
+        <!-- Título de la PWA -->
+        <ion-text color="primary" class="ion-text-center">
+          <h1 style="font-size: 28px; font-weight: 500; margin-bottom: 40px;">Crear Cuenta</h1>
+        </ion-text>
 
-          <ion-card-content>
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <ion-list>
-                <ion-item>
-                  <ion-label position="floating">Nombre completo</ion-label>
-                  <ion-input type="text" placeholder="Juan Pérez" formControlName="name">
-                  </ion-input>
-                </ion-item>
+        <!-- Formulario sin tarjeta -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <ion-list lines="none" style="background: transparent;">
+            <!-- Campo de Nombre -->
+            <ion-item lines="none" style="--background: transparent; margin-bottom: 5px;">
+              <ion-input type="text" placeholder="Nombre completo" formControlName="name"
+                style="border-bottom: 1px solid #ccc; --padding-start: 0;">
+              </ion-input>
+            </ion-item>
+            <!-- Mensaje de error para nombre -->
+            <ion-text color="danger" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+              <p style="font-size: 12px; margin: 5px 0 15px 0;">
+                El nombre es requerido
+              </p>
+            </ion-text>
 
-                <ion-item>
-                  <ion-label position="floating">Correo electrónico</ion-label>
-                  <ion-input type="email" placeholder="correo@ejemplo.com" formControlName="email">
-                  </ion-input>
-                </ion-item>
+            <!-- Campo de Email -->
+            <ion-item lines="none" style="--background: transparent; margin-bottom: 5px;">
+              <ion-input type="email" placeholder="Correo electrónico" formControlName="email"
+                style="border-bottom: 1px solid #ccc; --padding-start: 0;">
+              </ion-input>
+            </ion-item>
+            <!-- Mensaje de error para email -->
+            <ion-text color="danger" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+              <p style="font-size: 12px; margin: 5px 0 15px 0;">
+                <span *ngIf="form.get('email')?.errors?.['required']">El correo es requerido</span>
+                <span *ngIf="form.get('email')?.errors?.['email']">Ingresa un correo válido</span>
+              </p>
+            </ion-text>
 
-                <ion-item>
-                  <ion-label position="floating">Contraseña</ion-label>
-                  <ion-input type="password" placeholder="••••••••" formControlName="password">
-                  </ion-input>
-                </ion-item>
-              </ion-list>
+            <!-- Campo de Contraseña -->
+            <ion-item lines="none" style="--background: transparent; margin-bottom: 5px;">
+              <ion-input type="password" placeholder="Contraseña (mínimo 6 caracteres)" formControlName="password"
+                style="border-bottom: 1px solid #ccc; --padding-start: 0;">
+              </ion-input>
+            </ion-item>
+            <!-- Mensaje de error para contraseña -->
+            <ion-text color="danger" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+              <p style="font-size: 12px; margin: 5px 0 15px 0;">
+                <span *ngIf="form.get('password')?.errors?.['required']">La contraseña es requerida</span>
+                <span *ngIf="form.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6
+                  caracteres</span>
+              </p>
+            </ion-text>
+          </ion-list>
 
-              <ion-button expand="block" type="submit" color="primary" class="ion-margin-top">
-                <ion-icon slot="start" name="person-add-outline"></ion-icon>
-                <ion-label>Registrarse</ion-label>
-              </ion-button>
+          <!-- Botón de Registrarse -->
+          <ion-button expand="block" type="submit" color="primary" [disabled]="form.invalid || loading"
+            style="margin-top: 20px; margin-bottom: 20px; text-transform: uppercase;">
+            {{ loading ? 'REGISTRANDO...' : 'REGISTRARSE' }}
+          </ion-button>
 
-              <ion-text color="medium" class="ion-text-center">
-                <ion-label style="display: block;" class="ion-margin-top">
-                  ¿Ya tienes cuenta?
-                  <ion-router-link routerLink="/auth/login" color="primary">Inicia sesión</ion-router-link>
-                </ion-label>
-              </ion-text>
-            </form>
-          </ion-card-content>
-        </ion-card>
+          <!-- Enlace de login -->
+          <ion-text class="ion-text-center" style="display: block;">
+            <p style="margin: 0; color: #666;">
+              ¿Ya tienes cuenta?
+              <a routerLink="/auth/login" style="color: #3880ff; text-decoration: none; font-weight: 500;">
+                Inicia sesión
+              </a>
+            </p>
+          </ion-text>
+        </form>
       </ion-col>
     </ion-row>
   </ion-grid>

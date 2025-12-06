@@ -27,7 +27,11 @@ export class RegisterPage {
   }
 
   async onSubmit() {
+    // Marcar todos los campos como touched para mostrar errores
     if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach(key => {
+        this.form.get(key)?.markAsTouched();
+      });
       await this.presentToast('Por favor completa todos los campos correctamente', 'warning');
       return;
     }
@@ -41,7 +45,7 @@ export class RegisterPage {
         this.loading = false;
         this.auth.saveSession(res.token, res.user);
         await this.presentToast('Cuenta creada correctamente', 'success');
-        
+
         // Usar role.nombre en lugar de role.name
         const roleName = res.user.role?.nombre || res.user.role?.name;
         if (roleName === 'SuperAdmin') {
@@ -56,10 +60,10 @@ export class RegisterPage {
         console.error('Error al registrar:', err);
         console.error('Detalles del error:', err.error);
         this.loading = false;
-        
+
         // Manejar errores específicos
         let mensaje = 'Error al registrarte';
-        
+
         if (err.status === 422) {
           // Error de validación
           if (err.error?.errors?.email) {
@@ -74,17 +78,17 @@ export class RegisterPage {
         } else if (err.status === 500) {
           mensaje = 'Error del servidor. Intenta más tarde';
         }
-        
+
         await this.presentToast(mensaje, 'danger');
       }
     });
   }
 
   async presentToast(msg: string, color: string) {
-    const toast = await this.toastCtrl.create({ 
-      message: msg, 
-      duration: 3000, 
-      color 
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      color
     });
     await toast.present();
   }

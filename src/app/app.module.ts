@@ -16,10 +16,12 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(), 
-    AppRoutingModule, 
+    IonicModule.forRoot({
+      mode: 'md' // Forzar Material Design (Android) en todos los dispositivos
+    }),
+    AppRoutingModule,
     LayoutModule,
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -30,4 +32,4 @@ import { environment } from '../environments/environment';
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
