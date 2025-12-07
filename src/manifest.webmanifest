@@ -1,6 +1,7 @@
 {
   "name": "Gestor de Turnos",
   "short_name": "Turnos",
+  "version": "2.1.1",
   "id": "/",
   "description": "Sistema de gestión de turnos y citas en línea",
   "theme_color": "#3880ff",
