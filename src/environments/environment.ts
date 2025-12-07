@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:8000/api",
+  apiUrl: "https://gturnos.tech/api",
   firebase: {
     apiKey: "AIzaSyDYfVmUpqrnoaLUSEmWIHu12f32Dg9aZgk",
     authDomain: "gestor-turnos-6d05b.firebaseapp.com",
@@ -13,7 +13,7 @@ export const environment = {
     messagingSenderId: "151900514510",
     appId: "1:151900514510:web:22154d60b1ae51cc65489f",
     measurementId: "G-H00YKJELCD",
-    vapidKey: "BJi1d0qWR39cLTbgnGK_nle5NrmQlGOO4Be6liSBCPFF_FP9muuNpxG_HAmfbyMjGrZ_Y_9_GT6rWlUBGuIROo"
+    vapidKey: "BJ1i40qWR39cLTbgnGK_nle5NrmQIGOO4Be6iiSBCPFF_FP9muuNpxG_HAmfbyMIjGrZ_Y_9_GT6rWIUBGulR0o"
   }
 };
 
