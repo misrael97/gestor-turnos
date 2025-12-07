@@ -28,12 +28,12 @@ export class NotificationService {
   async requestPermission(): Promise<string | null> {
     try {
       const permission = await Notification.requestPermission();
-      
+
       if (permission === 'granted') {
         const token = await getToken(this.messaging, {
           vapidKey: environment.firebase.vapidKey
         });
-        
+
         this.currentToken = token;
         return token;
       } else {
@@ -69,7 +69,7 @@ export class NotificationService {
     if (this.messaging) {
       onMessage(this.messaging, (payload) => {
         console.log('Mensaje recibido en foreground:', payload);
-        
+
         // Mostrar notificación local
         if (payload.notification) {
           this.showNotification(
@@ -82,25 +82,22 @@ export class NotificationService {
     }
   }
 
-  private showNotification(title: string, body: string, data?: any) {
-    if ('Notification' in window && Notification.permission === 'granted') {
-      const notification = new Notification(title, {
-        body,
-        icon: '/assets/icon/favicon.png',
-        badge: '/assets/icon/favicon.png',
-        data
-      });
+  private async showNotification(title: string, body: string, data?: any) {
+    try {
+      if ('serviceWorker' in navigator && 'Notification' in window && Notification.permission === 'granted') {
+        const registration = await navigator.serviceWorker.ready;
 
-      notification.onclick = () => {
-        window.focus();
-        notification.close();
-        
-        // Navegar según el tipo de notificación
-        if (data?.turnoId) {
-          // Aquí puedes navegar a la página del turno
-          console.log('Navegar a turno:', data.turnoId);
-        }
-      };
+        await registration.showNotification(title, {
+          body,
+          icon: '/assets/icon/icon-192x192.png',
+          badge: '/assets/icon/icon-192x192.png',
+          data,
+          requireInteraction: true,
+          tag: data?.turnoId || 'notification'
+        });
+      }
+    } catch (error) {
+      console.error('Error mostrando notificación:', error);
     }
   }
 
