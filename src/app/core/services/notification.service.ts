@@ -30,11 +30,17 @@ export class NotificationService {
       const permission = await Notification.requestPermission();
 
       if (permission === 'granted') {
+        // Registrar el Service Worker de Firebase
+        const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+        console.log('✅ Service Worker de Firebase registrado:', registration.scope);
+
         const token = await getToken(this.messaging, {
-          vapidKey: environment.firebase.vapidKey
+          vapidKey: environment.firebase.vapidKey,
+          serviceWorkerRegistration: registration
         });
 
         this.currentToken = token;
+        console.log('✅ Token FCM obtenido:', token);
         return token;
       } else {
         console.warn('Permiso de notificaciones denegado');
