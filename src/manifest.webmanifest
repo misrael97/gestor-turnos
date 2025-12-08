@@ -1,7 +1,7 @@
 {
   "name": "Gestor de Turnos",
   "short_name": "Turnos",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "id": "/",
   "description": "Sistema de gestión de turnos y citas en línea",
   "theme_color": "#3880ff",
@@ -13,61 +13,25 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "assets/icon/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/icon/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/icon/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/icon/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/icon/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/icon/icon-192x192.png",
+      "src": "assets/icon/icon-192x192.png?v=2",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/icon/icon-192x192.png",
+      "src": "assets/icon/icon-192x192.png?v=2",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "assets/icon/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "assets/icon/icon-512x512.png",
+      "src": "assets/icon/icon-512x512.png?v=2",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "assets/icon/icon-512x512.png",
+      "src": "assets/icon/icon-512x512.png?v=2",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
