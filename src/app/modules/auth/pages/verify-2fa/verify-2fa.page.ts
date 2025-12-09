@@ -81,7 +81,7 @@ export class Verify2faPage implements OnInit {
         // Guardar sesión con el token
         this.auth.saveSession(res.token, res.user);
 
-        // 🔔 Solicitar permiso y enviar token FCM al servidor
+        // Solicitar permiso y enviar token FCM al servidor
         try {
           const fcmToken = await this.notificationService.requestPermission();
           if (fcmToken && res.user.id) {
@@ -109,7 +109,7 @@ export class Verify2faPage implements OnInit {
         }
       },
       error: async (err) => {
-        console.error('❌ Error al verificar 2FA');
+        console.error(' Error al verificar 2FA');
         console.error('Status:', err.status);
         console.error('Status Text:', err.statusText);
         console.error('Error completo:', err);
@@ -146,7 +146,7 @@ export class Verify2faPage implements OnInit {
           mensaje = 'Usuario no encontrado';
         }
         
-        console.warn('⚠️ Mensaje mostrado al usuario:', mensaje);
+        console.warn(' Mensaje mostrado al usuario:', mensaje);
         await this.presentToast(mensaje, 'danger');
         
         // Limpiar el código

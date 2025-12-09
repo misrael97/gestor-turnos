@@ -21,13 +21,13 @@ export class PwaService {
         event.preventDefault();
         this.promptEvent = event;
         this.canInstall$.next(true);
-        console.log('✅ PWA - Evento de instalación capturado');
+        console.log(' PWA - Evento de instalación capturado');
       });
 
       window.addEventListener('appinstalled', () => {
         this.canInstall$.next(false);
         this.isInstalled$.next(true);
-        console.log('✅ PWA - Aplicación instalada exitosamente');
+        console.log(' PWA - Aplicación instalada exitosamente');
       });
     }
   }
@@ -37,13 +37,13 @@ export class PwaService {
     if (window.matchMedia('(display-mode: standalone)').matches || 
         (window.navigator as any).standalone === true) {
       this.isInstalled$.next(true);
-      console.log('✅ PWA - Aplicación ya instalada');
+      console.log(' PWA - Aplicación ya instalada');
     }
   }
 
   public async installPwa(): Promise<boolean> {
     if (!this.promptEvent) {
-      console.log('❌ PWA - No se puede instalar en este momento');
+      console.log(' PWA - No se puede instalar en este momento');
       return false;
     }
 
@@ -51,11 +51,11 @@ export class PwaService {
     const result = await this.promptEvent.userChoice;
     
     if (result.outcome === 'accepted') {
-      console.log('✅ PWA - Usuario aceptó la instalación');
+      console.log(' PWA - Usuario aceptó la instalación');
       this.canInstall$.next(false);
       return true;
     } else {
-      console.log('❌ PWA - Usuario rechazó la instalación');
+      console.log(' PWA - Usuario rechazó la instalación');
       return false;
     }
   }

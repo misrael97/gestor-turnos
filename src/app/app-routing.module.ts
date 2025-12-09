@@ -7,7 +7,7 @@ import { RoleGuard } from "./core/guards/role.guard";
 const routes: Routes = [
   { path: "", redirectTo: "auth/login", pathMatch: "full" },
 
-  // 📺 RUTA PÚBLICA - Display de Turnos (sin autenticación, sin layout)
+  // RUTA PÚBLICA - Display de Turnos (sin autenticación, sin layout)
   {
     path: "display-publico/:id",
     loadComponent: () =>

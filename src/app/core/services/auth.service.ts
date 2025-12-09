@@ -24,7 +24,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router
   ) {
-    console.log('🔐 AuthService iniciado - API URL:', this.api);
+    console.log(' AuthService iniciado - API URL:', this.api);
   }
 
   // ---------------------------
@@ -79,12 +79,12 @@ export class AuthService {
    */
   login(data: any): Observable<any> {
     const url = `${this.api}/login`;
-    console.log('🔑 Intentando login en:', url);
+    console.log(' Intentando login en:', url);
 
     return this.http.post<any>(url, data).pipe(
       timeout(this.REQUEST_TIMEOUT),
       catchError(err => {
-        console.error('❌ Error en login:', err);
+        console.error(' Error en login:', err);
         return throwError(() => err);
       })
     );
@@ -95,12 +95,12 @@ export class AuthService {
    */
   verify2FA(email: string, code: string): Observable<any> {
     const payload = { email, code };
-    console.log('🔐 Verificando 2FA para:', email);
+    console.log(' Verificando 2FA para:', email);
 
     return this.http.post<any>(`${this.api}/login/verify-2fa`, payload).pipe(
       timeout(this.REQUEST_TIMEOUT),
       catchError(err => {
-        console.error('❌ Error en verify2FA:', err);
+        console.error(' Error en verify2FA:', err);
         return throwError(() => err);
       })
     );
@@ -115,7 +115,7 @@ export class AuthService {
     return this.http.post<any>(`${this.api}/login/resend-2fa`, { email }).pipe(
       timeout(this.REQUEST_TIMEOUT),
       catchError(err => {
-        console.error('❌ Error en resend2FA:', err);
+        console.error(' Error en resend2FA:', err);
         return throwError(() => err);
       })
     );
@@ -129,7 +129,7 @@ export class AuthService {
     return this.http.get(`${this.api}/me`, { headers }).pipe(
       timeout(this.REQUEST_TIMEOUT),
       catchError(err => {
-        console.error('❌ Error en me():', err);
+        console.error(' Error en me():', err);
         return throwError(() => err);
       })
     );
@@ -148,7 +148,7 @@ export class AuthService {
         this.saveSession(res.token, res.user);
       }),
       catchError(err => {
-        console.error('❌ Error en register:', err);
+        console.error(' Error en register:', err);
         return throwError(() => err);
       })
     );
@@ -162,7 +162,7 @@ export class AuthService {
    * Guarda el token y el usuario en localStorage Y actualiza los BehaviorSubjects.
    */
   saveSession(token: string, user: any) {
-    console.log('💾 Guardando sesión para:', user?.name || user?.email);
+    console.log(' Guardando sesión para:', user?.name || user?.email);
     localStorage.setItem(this.tokenKey, token);
     localStorage.setItem(this.userKey, JSON.stringify(user));
 
@@ -175,7 +175,7 @@ export class AuthService {
    * Cierra la sesión: limpia localStorage, actualiza BehaviorSubjects y redirige.
    */
   logout() {
-    console.log('👋 Cerrando sesión');
+    console.log(' Cerrando sesión');
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
 

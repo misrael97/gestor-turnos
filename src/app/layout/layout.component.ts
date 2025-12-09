@@ -33,8 +33,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     // Suscribirse a los cambios del usuario
     this.userSubscription = this.auth.userChanges.subscribe((user) => {
       this.user = user;
-      console.log("📋 Layout - Usuario actualizado:", this.user);
-      console.log("📋 Layout - Rol completo:", this.user?.role);
+      console.log(" Layout - Usuario actualizado:", this.user);
+      console.log(" Layout - Rol completo:", this.user?.role);
       this.configurarMenu();
     });
 
@@ -96,7 +96,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     const roleName = this.user?.role?.nombre || this.user?.role?.name;
     const roleId = this.user?.role?.id || this.user?.role_id;
 
-    console.log("📋 Configurando menú para rol:", roleName, "ID:", roleId);
+    console.log(" Configurando menú para rol:", roleName, "ID:", roleId);
 
     // Verificar rol por nombre o ID
     // role_id 1 = Administrador (NO usa PWA)
@@ -105,7 +105,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     // role_id 4 = Empleado (Atiende turnos)
 
     if (roleName === "Agente" || roleId === 2) {
-      console.log("📋 Menú: Agente (Admin de Sucursal)");
+      console.log(" Menú: Agente (Admin de Sucursal)");
       this.menuItems = [
         { title: "Mi Sucursal", icon: "home", path: "/super/dashboard" },
         { title: "Escanear QR", icon: "qr-code", path: "/super/escanear-qr" },
@@ -113,7 +113,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         { title: "Display", icon: "tv", path: "/super/display" },
       ];
     } else if (roleName === "Cliente" || roleId === 3) {
-      console.log("📋 Menú: Cliente");
+      console.log(" Menú: Cliente");
       this.menuItems = [
         { title: "Inicio", icon: "home", path: "/cliente/home" },
         { title: "Mi Turno", icon: "ticket", path: "/cliente/mi-turno" },
@@ -121,7 +121,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         { title: "Historial", icon: "time", path: "/cliente/historial" },
       ];
     } else if (roleName === "Empleado" || roleId === 4) {
-      console.log("📋 Menú: Empleado");
+      console.log(" Menú: Empleado");
       this.menuItems = [
         { title: "Turnos", icon: "list", path: "/empleado/turnos" },
         { title: "Colas", icon: "people", path: "/empleado/colas" },
@@ -129,14 +129,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
         { title: "Display", icon: "tv", path: "/empleado/display" },
       ];
     } else {
-      console.log("📋 Menú: Rol desconocido, usando menú de cliente");
+      console.log(" Menú: Rol desconocido, usando menú de cliente");
       this.menuItems = [
         { title: "Inicio", icon: "home", path: "/cliente/home" },
         { title: "Mi Turno", icon: "ticket", path: "/cliente/mi-turno" },
       ];
     }
 
-    console.log("📋 Items del menú configurados:", this.menuItems);
+    console.log("Items del menú configurados:", this.menuItems);
   }
 
   /**

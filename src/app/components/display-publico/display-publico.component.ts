@@ -53,11 +53,11 @@ export class DisplayPublicoComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (response: any) => {
-          console.log('📺 Display Público - Turnos recibidos:', response);
+          console.log(' Display Público - Turnos recibidos:', response);
           this.updateDisplay(response);
         },
         error: (err) => {
-          console.error('❌ Error al cargar turnos para display:', err);
+          console.error(' Error al cargar turnos para display:', err);
           this.clearDisplay();
         },
       });
@@ -119,8 +119,8 @@ export class DisplayPublicoComponent implements OnInit, OnDestroy {
       puesto: t.puesto,
     }));
 
-    console.log('📺 Turno actual:', this.currentTurn);
-    console.log('📺 Números llamados:', this.calledNumbers);
+    console.log(' Turno actual:', this.currentTurn);
+    console.log(' Números llamados:', this.calledNumbers);
   }
 
   generarCodigo(id: number): string {
@@ -140,6 +140,6 @@ export class DisplayPublicoComponent implements OnInit, OnDestroy {
       puesto: '--',
     };
     this.calledNumbers = [];
-    console.log('📺 Display limpio - No hay turnos activos');
+    console.log(' Display limpio - No hay turnos activos');
   }
 }
